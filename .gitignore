@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# macOS
+.DS_Store
+
+# IDE / editor settings
+.vscode/
+.idea/
+
+# Jupyter/IPython
+.ipynb_checkpoints/
+
+# Data & generated artifacts
+*.csv
+*.tsv
+*.log
+
+

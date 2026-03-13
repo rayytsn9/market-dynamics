@@ -44,34 +44,33 @@ def get_top_m_symbols(exchange, m: int, exclude_coins=config.STABLECOINS, window
     return top_m_symbols
 
 
-def fetch_ohlcv(exchange, symbols: list, timeframe='1d', since=None, limit=None) -> dict:
+def fetch_ohlcv(exchange, symbol: str, timeframe='1d', since=None, limit=None) -> pd.DataFrame:
     
-    ohlcv_dict = {}
+    df = None
 
     if exchange.has['fetchOHLCV']:
-        for symbol in symbols:
-            ohlcv = exchange.fetch_ohlcv(symbol, timeframe=timeframe, since=since, limit=limit)
-            ohlcv_dict[symbol] = ohlcv
-            time.sleep(exchange.rateLimit / 1000)
+        ohlcv = exchange.fetch_ohlcv(symbol, timeframe=timeframe, since=since, limit=limit)
+        df = pd.DataFrame(ohlcv, columns= ['timestamp' , 'open', 'high', 'low', 'close', 'volume'])
+        df['log_return'] = get_log_return_df(df['close'])
+        df = df.dropna(subset=['log_return', 'timestamp'])
+        df.set_index('timestamp', inplace=True)
+        time.sleep(exchange.rateLimit / 1000)
     else:
         print('exchange does not have "fetchOHLCV"')
 
-    return ohlcv_dict
+    return df
     
-def construct_dataset(exchange, symbols: list, N: int, since=None):
-    
+def construct_log_return_dataset(exchange, symbols: list, since=None, limit=None) -> dict:
+
     dataset = {}
-    
+
     for s in symbols:
         try:
-            ohlcv = exchange.fetch_ohlcv(s, timeframe='1d', since=since, limit=N+200)
-            df = pd.DataFrame(ohlcv, columns=['timestamp', 'open','high', 'low', 'close', 'volume'])
-            df['log_return'] = get_log_return_df(df['close'])
-            df = df[['timestamp', 'log_return']].dropna()
-            df.set_index('timestamp', inplace=True)
-            dataset[s] = df['log_return']
-            time.sleep(exchange.rateLimit / 1000)
+            df = fetch_ohlcv(exchange, s, since=since, limit=limit)
+            if df is not None:
+                dataset[s] = df['log_return']
         except:
             continue
 
     return dataset
+

@@ -28,8 +28,13 @@ def build_panel(dataset: dict, N, M) -> pd.DataFrame:
 
     return panel
 
+
 def mean_center(df: pd.DataFrame) -> np.ndarray:
     X = df.values
     return X - X.mean(axis=0)
+
+def clean_dataset(dataset: dict, N: int) -> dict:
+    return {k: v for k, v in dataset.items() if len(v) >= N}
+
 
 

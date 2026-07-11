@@ -6,3 +6,6 @@ THRESHOLD = 0.05  # loading threshold
 STABLECOINS = {'USDC/USDT', 'BUSD/USDT', 'TUSD/USDT', 
                'USDP/USDT', 'DAI/USDT', 'FDUSD/USDT'}
 CSV_FILE = None
+ASSETS = {'SPY', 'QQQ', 'IWM', 'TLT', 'VIX', 'DXY'}
+CRYPTO = False
+STOCKS = True

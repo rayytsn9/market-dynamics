@@ -4,7 +4,12 @@ import numpy as numpy
 import time
 import datetime as dt
 import config
+import yfinance as yf
 from .processor import get_log_return_df
+
+# ===================================================================================
+# CRYPTO and STOCK FETCHER
+# ===================================================================================
 
 def instantiate_exchange(exchange_id = config.EXCHANGE, enable_rate_limit = True):
     try:
@@ -43,20 +48,45 @@ def get_top_m_symbols(exchange, m: int, exclude_coins=config.STABLECOINS, window
 
     return top_m_symbols
 
+def has_ohlcv(ticker_symbol: str) -> bool:
+    
+    df = yf.Ticker(ticker_symbol).history()
 
-def fetch_ohlcv(exchange, symbol: str, timeframe='1d', since=None, limit=None) -> pd.DataFrame:
+    return not df.empty
+
+
+def fetch_ohlcv(exchange, symbol: str, timeframe='1d', since=None, limit=None, period=None) -> pd.DataFrame:
+    
+    if not config.CRYPTO and not config.ASSETS:
+        raise ValueError(f'CRYPTO: {config.CRYPTO}, ASSETS: {config.ASSETS}')
     
     df = None
 
-    if exchange.has['fetchOHLCV']:
-        ohlcv = exchange.fetch_ohlcv(symbol, timeframe=timeframe, since=since, limit=limit)
-        df = pd.DataFrame(ohlcv, columns= ['timestamp' , 'open', 'high', 'low', 'close', 'volume'])
-        df['log_return'] = get_log_return_df(df['close'])
-        df = df.dropna(subset=['log_return', 'timestamp'])
-        df.set_index('timestamp', inplace=True)
-        time.sleep(exchange.rateLimit / 1000)
-    else:
-        print('exchange does not have "fetchOHLCV"')
+    # fetching via ccxt
+    if config.CRYPTO:
+
+        if exchange.has['fetchOHLCV']:
+            ohlcv = exchange.fetch_ohlcv(symbol, timeframe=timeframe, since=since, limit=limit)
+            df = pd.DataFrame(ohlcv, columns= ['timestamp' , 'open', 'high', 'low', 'close', 'volume'])
+            time.sleep(exchange.rateLimit / 1000)
+        else:
+            raise ValueError('exchange does not have "fetchOHLCV"')
+            
+    # fetching via yfinance
+    elif config.ASSETS:
+
+        if has_ohlcv(symbol) and exchange == 'yfinance':
+            df = yf.Ticker(symbol).history(period=period, interval=timeframe)
+            df = df.reset_index()
+            df.columns = ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'dividends', 'stock_splits']
+        else:
+            raise ValueError(f'failed to fetch {symbol}')
+
+
+    df['log_return'] = get_log_return_df(df['close'])
+    df = df.dropna(subset=['log_return', 'timestamp'])
+    df.set_index('timestamp', inplace=True)
+
 
     return df
     
@@ -73,4 +103,7 @@ def construct_log_return_dataset(exchange, symbols: list, since=None, limit=None
             continue
 
     return dataset
+
+
+
 

@@ -16,7 +16,7 @@ python main.py
 
 ## Phase 1
 
-- [ ] Refactor from Crypto (ccxt -> yfinance) 
+- [ ] Add yfinance data ingestion layer for stock assets
 - [ ] Asset universe — SPY, QQQ, IWM, TLT, VIX, DXY
 - [ ] Data collection
 - [ ] Feature engineering

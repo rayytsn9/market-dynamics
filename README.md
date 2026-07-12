@@ -1,8 +1,8 @@
 # Market Dynamics
 
-A quantitative research project for exploring latent structure and regime behavior in financial markets using Principal Component Analysis.
+A quantitative research pipeline project for exploring latent structure and regime behavior in financial markets using Principal Component Analysis.
 
-The project currently focuses on transforming multivariate market data into a lower-dimensional representation, separating meaningful components from noise, interpreting factor loadings, and visualizing market observations in principal-component space.
+The project currently focuses on transforming multivariate market data into a lower-dimensional representation, separating meaningful components from noise, interpreting factor loadings, and visualizing market observations in principal-component space. Eventually, the project aims to be automated to produce dynamic analysis of market data. 
 
 ## Current Focus
 

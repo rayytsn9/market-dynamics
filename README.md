@@ -131,7 +131,7 @@ Compare both feature representations using quantitative and qualitative evaluati
 - Interpretability
 - Downstream usefulness for trading decisions
 
-The methodology demonstrating the strongest empirical performance will become the feature engineering pipeline for VOLTES.
+The methodology demonstrating the strongest empirical performance will become the feature engineering pipeline for market-dynamics.
 
 ---
 

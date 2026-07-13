@@ -127,6 +127,27 @@ Instead, market-dynamics estimates the current macro market regime and its trans
 
 ---
 
+## Unsupervised Feature Importance Architecture
+
+To evaluate which of the 88 technical indicators contain the highest structural signal for macro regime modeling, the pipeline executes a two-track unsupervised evaluation framework.
+
+### Track 1: Individual Asset Analysis
+* **Objective**: Isolate a single asset (e.g., `SPY`) and its corresponding 88 technical indicators.
+* **Methodology**: Apply unsupervised representation learning and clustering directly to the asset's feature matrix.
+* **Evaluation**: Identify which specific indicators or indicator categories (momentum, trend, volatility, volume) drive local cluster boundaries and regime formation for that specific asset.
+
+### Track 2: Cross-Asset Macro Analysis
+* **Objective**: Concatenate the technical indicator spaces of all 6 macro assets simultaneously to build a high-dimensional 528-feature macro state matrix.
+* **Methodology**: Apply Principal Component Analysis (PCA) across the entire system matrix to observe multi-asset variance capture.
+* **Evaluation**: Analyze the absolute mathematical values of the **Principal Component Loadings Matrix** to objectively rank which indicator categories dominate systemic, global macroeconomic structural shifts.
+
+## Mathematical Evaluation Metrics (Unsupervised Validation)
+Unlike supervised learning, feature performance is evaluated without a noisy price-prediction target. Features and resulting regimes are validated using:
+1. **Cluster Separability**: Evaluating feature subsets using *Silhouette Scores* and *Davies-Bouldin Indices*.
+2. **Regime Longevity & Persistence**: Constructing a discrete, first-order *Markov Transition Matrix* to measure the temporal stability ($P_{ii}$ diagonal persistence) of the mapped states.
+
+---
+
 ## Long-Term Vision
 
 The estimated market regime serves as **context** for downstream trading strategies rather than acting as a trading strategy itself.

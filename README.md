@@ -1,8 +1,12 @@
 # Market Dynamics
 
-A quantitative research pipeline project for exploring latent structure and regime behavior in financial markets using Principal Component Analysis.
+A quantitative research project focused on estimating **latent macro market regimes** through statistical representation learning and unsupervised learning.
 
-The project currently focuses on transforming multivariate market data into a lower-dimensional representation, separating meaningful components from noise, interpreting factor loadings, and visualizing market observations in principal-component space. Eventually, the project aims to be automated to produce dynamic analysis of market data. 
+The project investigates whether technical indicators shown to be informative for supervised price prediction also contain sufficient information to characterize latent market regimes in an unsupervised setting.
+
+Beginning with a macro asset universe consisting of **SPY, QQQ, IWM, TLT, VIX, and DXY**, VOLTES constructs a comprehensive, literature-informed feature space before applying statistical representation learning techniques (e.g., PCA and related methods) to discover meaningful market structure.
+
+The resulting latent market representation is clustered into discrete market regimes and modeled as a Markov transition process. Rather than directly predicting asset prices, the long-term objective is to estimate the current macro market state and provide it as contextual information for downstream trading strategies, where individual strategies will be statistically validated within the estimated market regime.
 
 ## Current Focus
 

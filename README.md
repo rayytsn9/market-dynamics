@@ -6,31 +6,42 @@ The project currently focuses on transforming multivariate market data into a lo
 
 ## Current Focus
 
-* Market data collection and preprocessing
-* Covariance and correlation analysis
-* Principal Component Analysis
-* Eigenvalue and explained-variance analysis
-* Marchenko–Pastur noise filtering
-* Principal-component loading interpretation
-* Market regime exploration
-* Interactive visualization and dashboard development
+- Literature-informed feature engineering
+- Technical indicator generation
+- Feature validation and statistical diagnostics
+- Statistical representation learning
+- Latent market state representation
+- Unsupervised market regime detection
+- Markov regime transition modeling
+- Interactive visualization and dashboard development
 
-## Research Pipeline
+## Current Research Pipeline
 
 ```text
-Market Data
-    ↓
-Data Processing / Feature Engineering
-    ↓
-Covariance Estimation
-    ↓
-PCA and Noise Analysis
-    ↓
-Loading Interpretation
-    ↓
-Regime Exploration
-    ↓
-Visualization and Dashboard
+Macro Asset Universe
+        │
+        ▼
+Technical Indicator Generation
+(Literature + TA-Lib)
+        │
+        ▼
+Feature Validation
+        │
+        ▼
+Statistical Representation Learning
+(Standardization, PCA, MP Filtering, etc.)
+        │
+        ▼
+Latent Market State Representation
+        │
+        ▼
+Unsupervised Regime Detection
+        │
+        ▼
+Discrete Market Regimes
+        │
+        ▼
+Markov Transition Model
 ```
 
 ## Project Structure
@@ -105,35 +116,6 @@ While the paper focuses on **supervised price prediction**, market-dynamics adop
 Rather than directly predicting future prices, market-dynamics investigates whether these technical indicators can be transformed into a meaningful representation of the macro market state.
 
 ---
-
-## Current Research Pipeline
-
-```text
-Macro Asset Universe
-        │
-        ▼
-Technical Indicator Generation
-(Literature + TA-Lib)
-        │
-        ▼
-Feature Validation
-        │
-        ▼
-Statistical Representation Learning
-(Standardization, PCA, MP Filtering, etc.)
-        │
-        ▼
-Latent Market State Representation
-        │
-        ▼
-Unsupervised Regime Detection
-        │
-        ▼
-Discrete Market Regimes
-        │
-        ▼
-Markov Transition Model
-```
 
 The output of this pipeline is **not** a trading signal or price prediction.
 

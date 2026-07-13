@@ -83,68 +83,45 @@ market-dynamics/
 └── README.md
 ```
 
-## Methodology
+## Methodology & Research Architecture
 
-### Current Phase
+### Core Research Question
+> **What unsupervised feature representation best captures the latent macro market state for robust regime modeling?**
 
-**Research Question**
+Given the macro asset universe: `[SPY, QQQ, IWM, TLT, VIX, DXY]`, this project systematically evaluates high-dimensional feature spaces to isolate clean macro market state representations.
 
-> **What feature representation best captures the latent macro market state for regime modeling and downstream trading decisions?**
+### Research Inspiration & Hypothesis
+This architecture replicates and extends the feature space introduced by Mostafavi & Hooman (2025) in *Machine Learning with Applications*:
+* [Key Technical Indicators for Stock Market Prediction (ScienceDirect)](https://www.sciencedirect.com/science/article/pii/S2666827025000143)
 
-Given the macro asset universe
+While the original paper utilizes **88 technical indicators** (spanning momentum, trend, volatility, and volume) for *supervised price forecasting*, **market-dynamics** shifts the paradigm to an unsupervised setting based on a central working hypothesis:
 
-```text
-[SPY, QQQ, IWM, TLT, VIX, DXY]
-```
-
-construct a feature representation of the macro market state.
-
-### Research Inspiration
-
-The current feature engineering phase is inspired in part by the following paper:
-
-> **Key Technical Indicators for Stock Market Prediction**  
-> *Machine Learning with Applications* (2025)  
-> https://www.sciencedirect.com/science/article/pii/S2666827025000143
-
-The paper investigates the predictive power of **88 technical indicators** categorized into interpretable classes (e.g., **momentum, trend, volatility, and volume**) using supervised machine learning models for S&P 500 price forecasting.
-
-While the paper focuses on **supervised price prediction**, market-dynamics adopts a different objective.
+> **Working Hypothesis:** Technical indicators identified as highly informative for supervised price prediction contain sufficient structural information to characterize latent macro market regimes in an unsupervised representation space.
 
 ---
 
-### Working Hypothesis
+## Unsupervised Feature Evaluation Framework
 
-> **Technical indicators identified as informative for supervised price prediction also contain sufficient information to characterize latent macro market regimes in an unsupervised setting.**
-
-Rather than directly predicting future prices, market-dynamics investigates whether these technical indicators can be transformed into a meaningful representation of the macro market state.
-
----
-
-The output of this pipeline is **not** a trading signal or price prediction.
-
-Instead, market-dynamics estimates the current macro market regime and its transition dynamics.
-
----
-
-## Unsupervised Feature Importance Architecture
-
-To evaluate which of the 88 technical indicators contain the highest structural signal for macro regime modeling, the pipeline executes a two-track unsupervised evaluation framework.
+To determine which of the 88 technical indicators provide the highest structural signal for macro regime modeling without relying on a noisy price-prediction target, the pipeline executes a two-track unsupervised evaluation:
 
 ### Track 1: Individual Asset Analysis
-* **Objective**: Isolate a single asset (e.g., `SPY`) and its corresponding 88 technical indicators.
-* **Methodology**: Apply unsupervised representation learning and clustering directly to the asset's feature matrix.
-* **Evaluation**: Identify which specific indicators or indicator categories (momentum, trend, volatility, volume) drive local cluster boundaries and regime formation for that specific asset.
+* **Objective:** Isolate a single asset (e.g., `SPY`) and its corresponding 88 technical indicators.
+* **Methodology:** Apply unsupervised representation learning and clustering models directly to the local asset feature matrix.
+* **Evaluation:** Identify which specific indicator categories (momentum, trend, volatility, volume) drive local cluster boundaries and regime formation for that independent asset.
 
 ### Track 2: Cross-Asset Macro Analysis
-* **Objective**: Concatenate the technical indicator spaces of all 6 macro assets simultaneously to build a high-dimensional 528-feature macro state matrix.
-* **Methodology**: Apply Principal Component Analysis (PCA) across the entire system matrix to observe multi-asset variance capture.
-* **Evaluation**: Analyze the absolute mathematical values of the **Principal Component Loadings Matrix** to objectively rank which indicator categories dominate systemic, global macroeconomic structural shifts.
+* **Objective:** Concatenate the technical indicator spaces of all 6 macro assets simultaneously to construct a high-dimensional, 528-feature macro state matrix.
+* **Methodology:** Run Principal Component Analysis (PCA) across the entire systemic matrix to observe cross-asset variance capture.
+* **Evaluation:** Analyze the absolute mathematical values of the **Principal Component Loadings Matrix** to objectively rank which indicator categories dominate systemic, global macroeconomic structural shifts.
+
+---
 
 ## Mathematical Evaluation Metrics (Unsupervised Validation)
-Unlike supervised learning, feature performance is evaluated without a noisy price-prediction target. Features and resulting regimes are validated using:
-1. **Cluster Separability**: Evaluating feature subsets using *Silhouette Scores* and *Davies-Bouldin Indices*.
-2. **Regime Longevity & Persistence**: Constructing a discrete, first-order *Markov Transition Matrix* to measure the temporal stability ($P_{ii}$ diagonal persistence) of the mapped states.
+
+Because this pipeline estimates macro market regimes and transition dynamics rather than standalone trading signals, feature representation quality is validated using purely unsupervised mathematical metrics:
+
+1. **Cluster Separability:** Evaluating feature subsets by measuring resulting cluster boundaries via **Silhouette Scores** and **Davies-Bouldin Indices**.
+2. **Regime Longevity & Persistence:** Constructing a discrete, first-order **Markov Transition Matrix** to mathematically evaluate the temporal stability ($P_{ii}$ diagonal persistence) of the mapped states.
 
 ---
 

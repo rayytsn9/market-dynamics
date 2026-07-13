@@ -48,11 +48,14 @@ def get_top_m_symbols(exchange, m: int, exclude_coins=config.STABLECOINS, window
 
     return top_m_symbols
 
+# yfinance has_ohlcv function
 def has_ohlcv(ticker_symbol: str) -> bool:
     
-    df = yf.Ticker(ticker_symbol).history()
-
-    return not df.empty
+    try:
+        df = yf.Ticker(ticker_symbol).history()
+        return not df.empty
+    except:
+        return False
 
 
 def fetch_ohlcv(exchange, symbol: str, timeframe='1d', since=None, limit=None, period=None) -> pd.DataFrame:
@@ -94,6 +97,7 @@ def construct_log_return_dataset(exchange, symbols: list, since=None, limit=None
 
     dataset = {}
 
+    # if config.CRYPTO:
     for s in symbols:
         try:
             df = fetch_ohlcv(exchange, s, since=since, limit=limit)
@@ -105,5 +109,11 @@ def construct_log_return_dataset(exchange, symbols: list, since=None, limit=None
     return dataset
 
 
+def fetch_assetDataFrame(tickers: list, period=None, interval='1d', start=None, end=None) -> pd.DataFrame:
 
+    try:
+        df = yf.download(tickers, period=period, interval=interval, start=start, end=end)
+    except:
+        raise ValueError('failed to fetch tickers')
 
+    return df

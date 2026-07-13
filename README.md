@@ -109,27 +109,29 @@ Rather than directly predicting future prices, market-dynamics investigates whet
 ## Current Research Pipeline
 
 ```text
-Macro Assets
+Macro Asset Universe
         │
         ▼
-Feature Engineering
+Technical Indicator Generation
+(Literature + TA-Lib)
         │
-        ├── Curated Features
-        └── TA-Lib Feature Space
-                │
-                ▼
-(Optional PCA / Statistical Processing)
-                │
-                ▼
-Market State Representation
-                │
-                ▼
+        ▼
+Feature Validation
+        │
+        ▼
+Statistical Representation Learning
+(Standardization, PCA, MP Filtering, etc.)
+        │
+        ▼
+Latent Market State Representation
+        │
+        ▼
 Unsupervised Regime Detection
-                │
-                ▼
+        │
+        ▼
 Discrete Market Regimes
-                │
-                ▼
+        │
+        ▼
 Markov Transition Model
 ```
 
@@ -164,16 +166,16 @@ This separation allows multiple independent trading strategies to leverage a com
 ## Roadmap
 
 ### Phase 1 — Data Foundation
-* [x] Market data collection
-* [x] Data preprocessing framework
-* [x] Feature engineering framework
+- [x] Market data collection
+- [x] Data preprocessing framework
+- [x] Feature engineering framework
 
 ### Phase 2 — Feature Engineering Research
-* [ ] Curated macro feature engineering
-* [ ] Kitchen Sink (TA-Lib) feature generation
-* [ ] Feature validation & statistical diagnostics
-* [ ] Compare curated vs. TA-Lib feature spaces
-* [ ] Finalize market state representation
+- [ ] Literature review on technical indicator representations
+- [ ] Construct comprehensive technical indicator feature space
+- [ ] Feature validation & statistical diagnostics
+- [ ] Dimensionality reduction research (PCA, MP filtering, etc.)
+- [ ] Finalize market state representation
 
 
 ## Philosophy

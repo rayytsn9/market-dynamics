@@ -84,58 +84,29 @@ Given the macro asset universe
 
 construct a feature representation of the macro market state.
 
-This project will evaluate two methodologies for feature engineering before selecting the final representation.
+## Research Inspiration
+
+The current feature engineering phase is inspired in part by the following paper:
+
+> **Key Technical Indicators for Stock Market Prediction**  
+> *Machine Learning with Applications* (2025)  
+> https://www.sciencedirect.com/science/article/pii/S2666827025000143
+
+The paper investigates the predictive power of **88 technical indicators** categorized into interpretable classes (e.g., **momentum, trend, volatility, and volume**) using supervised machine learning models for S&P 500 price forecasting.
+
+While the paper focuses on **supervised price prediction**, VOLTES adopts a different objective.
 
 ---
 
-### Method 1 — Curated Feature Engineering
+## Working Hypothesis
 
-Research and engineer a set of features that are hypothesized to capture meaningful characteristics of the macro market.
+> **Technical indicators identified as informative for supervised price prediction also contain sufficient information to characterize latent macro market regimes in an unsupervised setting.**
 
-Examples of latent concepts include:
-
-- Trend
-- Momentum
-- Volatility
-- Risk Sentiment
-- Relative Strength
-- Cross-Asset Relationships
-
-The objective is to build a compact, interpretable feature set driven by financial intuition.
+Rather than directly predicting future prices, VOLTES investigates whether these technical indicators can be transformed into a meaningful representation of the macro market state.
 
 ---
 
-### Method 2 — Kitchen Sink (TA-Lib)
-
-Generate a comprehensive feature space by computing as many relevant technical indicators as possible using TA-Lib.
-
-Rather than manually selecting indicators, this approach allows the data to determine which combinations of features contain meaningful structure.
-
-The resulting feature space will then be analyzed using statistical techniques such as:
-
-- Covariance analysis
-- Principal Component Analysis (PCA)
-- Marchenko–Pastur filtering
-- Other dimensionality reduction or covariance-cleaning methods
-
-The objective is to determine whether a broad, data-driven representation captures the macro market state more effectively than manually engineered features.
-
----
-
-### Method 3 — Comparative Evaluation
-
-Compare both feature representations using quantitative and qualitative evaluation criteria, including:
-
-- Regime quality
-- Regime stability
-- Interpretability
-- Downstream usefulness for trading decisions
-
-The methodology demonstrating the strongest empirical performance will become the feature engineering pipeline for market-dynamics.
-
----
-
-### Future Pipeline
+## Current Research Pipeline
 
 ```text
 Macro Assets
@@ -147,69 +118,48 @@ Feature Engineering
         └── TA-Lib Feature Space
                 │
                 ▼
-      Statistical Processing
- (Scaling, PCA, MP, etc.)
+(Optional PCA / Statistical Processing)
                 │
                 ▼
-      Market State Representation
+Market State Representation
                 │
                 ▼
-         Regime Detection
+Unsupervised Regime Detection
                 │
                 ▼
-      Transition Modeling
+Discrete Market Regimes
                 │
                 ▼
-      Decision Support System
+Markov Transition Model
 ```
 
-## Installation
+The output of this pipeline is **not** a trading signal or price prediction.
 
-Clone the repository:
+Instead, VOLTES estimates the current macro market regime and its transition dynamics.
 
-```bash
-git clone https://github.com/rayytsn9/market-dynamics.git
-cd market-dynamics
+---
+
+## Long-Term Vision
+
+The estimated market regime serves as **context** for downstream trading strategies rather than acting as a trading strategy itself.
+
+Future strategy pipelines will follow the architecture:
+
+```text
+Current Market Regime
+        │
+        ▼
+Trading Strategy
+        │
+        ▼
+Hypothesis Testing / Statistical Validation
+        │
+        ▼
+Trading Decision
 ```
 
-Create and activate a virtual environment:
+This separation allows multiple independent trading strategies to leverage a common market state estimation engine while keeping market state estimation, strategy generation, and statistical validation as distinct components of the system.
 
-```bash
-python -m venv venv
-source venv/bin/activate
-```
-
-On Windows:
-
-```bash
-venv\Scripts\activate
-```
-
-Install the dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Usage
-
-Run the main research workflow:
-
-```bash
-python main.py
-```
-
-Launch the interactive dashboard:
-
-```bash
-streamlit run dashboard.py
-```
-
-Run the tests:
-
-```bash
-pytest
-```
 
 ## Roadmap
 

@@ -4,7 +4,7 @@ A quantitative research project focused on estimating **latent macro market regi
 
 The project investigates whether technical indicators shown to be informative for supervised price prediction also contain sufficient information to characterize latent market regimes in an unsupervised setting.
 
-Beginning with a macro asset universe consisting of **SPY, QQQ, IWM, TLT, VIX, and DXY**, VOLTES constructs a comprehensive, literature-informed feature space before applying statistical representation learning techniques (e.g., PCA and related methods) to discover meaningful market structure.
+Beginning with a macro asset universe consisting of **SPY, QQQ, IWM, TLT, VIX, and DXY**, market-dynamics constructs a comprehensive, literature-informed feature space before applying statistical representation learning techniques (e.g., PCA and related methods) to discover meaningful market structure.
 
 The resulting latent market representation is clustered into discrete market regimes and modeled as a Markov transition process. Rather than directly predicting asset prices, the long-term objective is to estimate the current macro market state and provide it as contextual information for downstream trading strategies, where individual strategies will be statistically validated within the estimated market regime.
 

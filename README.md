@@ -166,12 +166,10 @@ This separation allows multiple independent trading strategies to leverage a com
 
 ## Philosophy
 
-The project prioritizes understanding market structure before attempting prediction.
+market-dynamics treats market state estimation as a problem separate from trading.
 
-Its purpose is not to label every statistical pattern as a trading signal, but to build an interpretable research foundation for studying common market factors, dimensionality, noise, and changing market conditions.
+Rather than directly predicting prices or generating trading signals, the project first seeks to estimate the latent macro market regime. This estimated market state serves as contextual information for downstream trading strategies, allowing market understanding, strategy generation, and statistical validation to remain independent components of the research pipeline.
 
 ## Status
 
-This project is under active development.
-
-Current work is centered on PCA-based market structure analysis and the interpretation of potential market regimes.
+Current work is focused on constructing a literature-informed feature representation of the macro market and investigating whether unsupervised representation learning can recover meaningful market regimes.

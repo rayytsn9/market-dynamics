@@ -213,22 +213,6 @@ pytest
 
 ## Roadmap
 
-* [x] Market data collection
-* [x] Data preprocessing / Feature Engineering
-* [ ] Covariance analysis
-* [ ] PCA implementation
-* [ ] Eigenvalue visualization
-* [ ] Principal-component loading analysis
-* [ ] PCA projection visualization
-* [ ] Refine Marchenko–Pastur noise filtering
-* [ ] Formalize regime identification
-* [ ] Evaluate regime stability over time
-* [ ] Add additional assets and market features
-* [ ] Improve automated testing
-* [ ] Expand the interactive dashboard
-
-## Roadmap
-
 ### Phase 1 — Data Foundation
 * [x] Market data collection
 * [x] Data preprocessing framework

@@ -227,6 +227,21 @@ pytest
 * [ ] Improve automated testing
 * [ ] Expand the interactive dashboard
 
+## Roadmap
+
+### Phase 1 — Data Foundation
+* [x] Market data collection
+* [x] Data preprocessing framework
+* [x] Feature engineering framework
+
+### Phase 2 — Feature Engineering Research
+* [ ] Curated macro feature engineering
+* [ ] Kitchen Sink (TA-Lib) feature generation
+* [ ] Feature validation & statistical diagnostics
+* [ ] Compare curated vs. TA-Lib feature spaces
+* [ ] Finalize market state representation
+
+
 ## Philosophy
 
 The project prioritizes understanding market structure before attempting prediction.

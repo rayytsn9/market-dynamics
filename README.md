@@ -84,7 +84,7 @@ Given the macro asset universe
 
 construct a feature representation of the macro market state.
 
-## Research Inspiration
+### Research Inspiration
 
 The current feature engineering phase is inspired in part by the following paper:
 
@@ -94,15 +94,15 @@ The current feature engineering phase is inspired in part by the following paper
 
 The paper investigates the predictive power of **88 technical indicators** categorized into interpretable classes (e.g., **momentum, trend, volatility, and volume**) using supervised machine learning models for S&P 500 price forecasting.
 
-While the paper focuses on **supervised price prediction**, VOLTES adopts a different objective.
+While the paper focuses on **supervised price prediction**, market-dynamics adopts a different objective.
 
 ---
 
-## Working Hypothesis
+### Working Hypothesis
 
 > **Technical indicators identified as informative for supervised price prediction also contain sufficient information to characterize latent macro market regimes in an unsupervised setting.**
 
-Rather than directly predicting future prices, VOLTES investigates whether these technical indicators can be transformed into a meaningful representation of the macro market state.
+Rather than directly predicting future prices, market-dynamics investigates whether these technical indicators can be transformed into a meaningful representation of the macro market state.
 
 ---
 
@@ -135,7 +135,7 @@ Markov Transition Model
 
 The output of this pipeline is **not** a trading signal or price prediction.
 
-Instead, VOLTES estimates the current macro market regime and its transition dynamics.
+Instead, market-dynamics estimates the current macro market regime and its transition dynamics.
 
 ---
 

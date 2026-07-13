@@ -24,4 +24,6 @@ env/
 *.tsv
 *.log
 
+# utility modules/scripts
+multiIndex.py
 

@@ -20,7 +20,7 @@ The project currently focuses on transforming multivariate market data into a lo
 ```text
 Market Data
     ↓
-Data Processing
+Data Processing / Feature Engineering
     ↓
 Covariance Estimation
     ↓
@@ -70,23 +70,98 @@ market-dynamics/
 
 ## Methodology
 
-Principal Component Analysis is used to identify the dominant sources of variation across a collection of financial assets.
+### Current Phase
 
-Given a standardized return matrix (X), PCA decomposes its covariance or correlation matrix into eigenvalues and eigenvectors:
+**Research Question**
 
-[
-\Sigma = V \Lambda V^\top
-]
+> **What feature representation best captures the latent macro market state for regime modeling and downstream trading decisions?**
 
-where:
+Given the macro asset universe
 
-* (\Lambda) contains the variance explained by each principal component
-* (V) contains the corresponding component loadings
-* projecting (X) onto the leading eigenvectors produces a lower-dimensional representation of market behavior
+```text
+[SPY, QQQ, IWM, TLT, VIX, DXY]
+```
 
-The project also uses the Marchenko–Pastur distribution to examine whether observed eigenvalues represent meaningful shared structure or are consistent with random-matrix noise.
+construct a feature representation of the macro market state.
 
-The resulting components and projections can then be studied for clusters, transitions, and other patterns associated with changing market conditions.
+This project will evaluate two methodologies for feature engineering before selecting the final representation.
+
+---
+
+### Method 1 — Curated Feature Engineering
+
+Research and engineer a set of features that are hypothesized to capture meaningful characteristics of the macro market.
+
+Examples of latent concepts include:
+
+- Trend
+- Momentum
+- Volatility
+- Risk Sentiment
+- Relative Strength
+- Cross-Asset Relationships
+
+The objective is to build a compact, interpretable feature set driven by financial intuition.
+
+---
+
+### Method 2 — Kitchen Sink (TA-Lib)
+
+Generate a comprehensive feature space by computing as many relevant technical indicators as possible using TA-Lib.
+
+Rather than manually selecting indicators, this approach allows the data to determine which combinations of features contain meaningful structure.
+
+The resulting feature space will then be analyzed using statistical techniques such as:
+
+- Covariance analysis
+- Principal Component Analysis (PCA)
+- Marchenko–Pastur filtering
+- Other dimensionality reduction or covariance-cleaning methods
+
+The objective is to determine whether a broad, data-driven representation captures the macro market state more effectively than manually engineered features.
+
+---
+
+### Method 3 — Comparative Evaluation
+
+Compare both feature representations using quantitative and qualitative evaluation criteria, including:
+
+- Regime quality
+- Regime stability
+- Interpretability
+- Downstream usefulness for trading decisions
+
+The methodology demonstrating the strongest empirical performance will become the feature engineering pipeline for VOLTES.
+
+---
+
+### Future Pipeline
+
+```text
+Macro Assets
+        │
+        ▼
+Feature Engineering
+        │
+        ├── Curated Features
+        └── TA-Lib Feature Space
+                │
+                ▼
+      Statistical Processing
+ (Scaling, PCA, MP, etc.)
+                │
+                ▼
+      Market State Representation
+                │
+                ▼
+         Regime Detection
+                │
+                ▼
+      Transition Modeling
+                │
+                ▼
+      Decision Support System
+```
 
 ## Installation
 
@@ -139,12 +214,12 @@ pytest
 ## Roadmap
 
 * [x] Market data collection
-* [x] Data preprocessing
-* [x] Covariance analysis
-* [x] PCA implementation
-* [x] Eigenvalue visualization
-* [x] Principal-component loading analysis
-* [x] PCA projection visualization
+* [x] Data preprocessing / Feature Engineering
+* [ ] Covariance analysis
+* [ ] PCA implementation
+* [ ] Eigenvalue visualization
+* [ ] Principal-component loading analysis
+* [ ] PCA projection visualization
 * [ ] Refine Marchenko–Pastur noise filtering
 * [ ] Formalize regime identification
 * [ ] Evaluate regime stability over time

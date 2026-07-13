@@ -170,4 +170,4 @@ Rather than directly predicting prices or generating trading signals, the projec
 
 ## Status
 
-Current work is focused on constructing a literature-informed feature representation of the macro market and investigating whether unsupervised representation learning can recover meaningful market regimes.
+Current work is focused on constructing a literature-informed feature space and investigating statistical methods for learning latent macro market representations.

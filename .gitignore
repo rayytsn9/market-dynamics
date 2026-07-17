@@ -27,3 +27,6 @@ env/
 # utility modules/scripts
 multiIndex.py
 
+research_papers/
+tests/test_results
+

@@ -1,5 +1,7 @@
 import datetime as dt
-
+from processor import TaLibProcessor
+import fetcher as fetcher
+import config
 
 def get_since(N, timeframe='1d', from_time=None):
     """
@@ -36,3 +38,4 @@ def get_since(N, timeframe='1d', from_time=None):
 
     since = int(start.replace(tzinfo=dt.timezone.utc).timestamp() * 1000)
     return since
+

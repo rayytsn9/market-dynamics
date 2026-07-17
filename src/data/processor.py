@@ -94,24 +94,24 @@ class TaLibProcessor:
         if cls._STATIC_BLUEPRINT is not None:
             return
 
-        cls._STATIC_BLUEPRINT = {}
+        temp_dict = {}
         for key, val in talib_map.items():
 
-            if val is not None:
-                try:
+            if val is None:
+                temp_dict[key] = None
+                continue
 
-                    if isinstance(val, str):
-                        _test_instantiation = ta.Function(val.upper())
-                        cls._STATIC_BLUEPRINT[key] = val.upper()
-                    elif isinstance(val, tuple):
-                        _test_instantiation = ta.Function(val[0])
-                        cls._STATIC_BLUEPRINT[key] = val
+            func_name = val if isinstance(val, str) else val[0]
 
-                except:
-                    print(f'value is not a valid abstract function name')
-            elif val is None:
+            if not hasattr(ta, func_name.upper()):
+                raise KeyError(
+                    f"Factory instantiation failed: Indicator : unsupported TA-Lib function '{func_name}' in map."
+                )
 
-                cls._STATIC_BLUEPRINT[key] = None
+            temp_dict[key] = val.upper() if isinstance(val, str) else val
+
+        cls._STATIC_BLUEPRINT = temp_dict
+
 
 
     def __init__(self) -> None:
@@ -119,7 +119,6 @@ class TaLibProcessor:
         if self._STATIC_BLUEPRINT is None:
             raise RuntimeError('Factory error: Call TaLibProcessor.instantiate_factory(TALIB_MAP) first.')
 
-        # self.local_functions = {key: ta.Function(val) for key, val in self._STATIC_BLUEPRINT.items()}
         self.local_functions = {}
 
         for key, val in self._STATIC_BLUEPRINT.items():
@@ -142,20 +141,20 @@ class TaLibProcessor:
             raise KeyError(f'Indicator {key} not found')
 
         abstract_func = self.local_functions[key]
-
         if abstract_func is None:
             return None
-
+        
         abstract_func.set_input_arrays(df)
 
         if override_kwargs:
+            default_args = abstract_func.info['parameters']
             abstract_func.set_function_args(override_kwargs)
 
         try:
             output =  abstract_func()
         finally:
             if override_kwargs:
-                abstract_func.set_function_args({})
+                abstract_func.set_function_args(default_args)
                 
         is_split_indicator = isinstance(self._STATIC_BLUEPRINT[key], tuple)
 
@@ -164,7 +163,12 @@ class TaLibProcessor:
         else:
             return output
         
+    @property
+    def _local_functions(self):
+        return self.local_functions.copy()
 
-    def get_local_functions(self):
-        return self.local_functions
+    @property
+    def _static_blueprint(self):
+        return self._STATIC_BLUEPRINT.copy()
+    
 

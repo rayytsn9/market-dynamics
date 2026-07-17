@@ -1,21 +1,39 @@
 import pytest
 import config
-from src.data.processor import TaLibProcessor
+from src.data.processor import TaLibProcessor, ta
 import numpy as np
 import pandas as pd
 
+@pytest.fixture
+def invalid_ta_map():
+
+    invalid_map = {
+        "Accumulation Distribution": "AD",
+        "ADX": "ADX",
+        "Aroon Oscillator": "AROONOSC",
+        "ATR Bands": None,
+        "ATR Trailing Stops": "hehe",
+        "Average True Range": "ATR",
+    }
+
+    yield invalid_map
+
+@pytest.fixture
+def working_ta_map():
+
+    talib_map = {key: val for key, val in config.StockConfig.TALIB_MAP.items() if val is not None}
+    yield talib_map
+    
 
 @pytest.fixture(scope='function')
 def ta_map():
-    # talib_map = {key: val for key, val in config.StockConfig.TALIB_MAP.items() if val is not None}
-
+    
     talib_map = config.StockConfig.TALIB_MAP
-
     yield talib_map
 
 
 @pytest.fixture(scope='function')
-def ta_processor(sample_market_data, ta_map):
+def ta_processor(ta_map):
 
     print('Setting up ta processor')
     TaLibProcessor.instantiate_factory(ta_map)
@@ -23,6 +41,7 @@ def ta_processor(sample_market_data, ta_map):
 
     yield processor
 
+    TaLibProcessor._STATIC_BLUEPRINT = None
     print('Tearing down ta processor')
 
 
@@ -56,25 +75,25 @@ def pytest_generate_tests(metafunc):
 
         if target_arg in metafunc.fixturenames and target_arg == 'indicator_data':
 
-
             parametrized_cases = []
             for indicator, func_name in config.StockConfig.TALIB_MAP.items():
 
-                is_unimplemented = (func_name is None)
-
-                if is_unimplemented:
-
+                if func_name is None:
                     test_case = pytest.param((indicator, func_name), marks=pytest.mark.xfail(reason=f'{indicator} not yet implemented'), id=indicator)
 
+                elif isinstance(func_name, str) and not hasattr(ta, func_name.upper()):
+                    test_case = pytest.param((indicator, func_name), marks=pytest.mark.xfail(reason=f'{func_name} not supported by TA-LIB.'), id=indicator)
+
+                elif isinstance(func_name, tuple) and not hasattr(ta, func_name[0].upper()):
+                    test_case = pytest.param((indicator, func_name), marks=pytest.mark.xfail(reason=f'{func_name} not supported by TA-LIB.'), id=indicator)
+
                 else:
-
                     test_case = pytest.param((indicator, func_name), id=indicator)
-
 
                 parametrized_cases.append(test_case)
 
             metafunc.parametrize(argnames=target_arg,argvalues=parametrized_cases)
-    
+
 
 def pytest_terminal_summary(terminalreporter):
     """

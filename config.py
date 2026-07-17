@@ -1,3 +1,6 @@
+from pytz import NonExistentTimeError
+
+
 CRYPTO = False
 STOCKS = True
 

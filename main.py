@@ -4,7 +4,6 @@ import src.data.processor as processor
 import src.analysis.covariance as covariance
 import src.analysis.pca as pca
 import pandas as pd
-import talib.abstract as ta
 from src.data.processor import TaLibProcessor
 
 
@@ -58,6 +57,10 @@ def main():
                 if key not in seen_TI:
                     unseen_TI.add(key)
 
- 
+        
+
+
+
+
 if __name__ == "__main__":
     main()

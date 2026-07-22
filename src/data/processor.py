@@ -4,6 +4,7 @@ import pandas as pd
 import talib.abstract as ta
 import inspect
 import config
+from fetcher import Stock
 
 
 class CryptoProcessor:
@@ -56,12 +57,6 @@ class StockProcessor:
 
     @staticmethod
     def construct_log_return_df(df: pd.DataFrame) -> pd.DataFrame:
-
-        # tickers = df.columns.get_level_values('Ticker').unique().to_list()
-        
-        # log_df = pd.DataFrame({i: StockProcessor.compute_log_return(df[('Close', i)]) for i in tickers})
-        
-        # return log_df
 
         close_prices = df['Close']
 
@@ -171,4 +166,3 @@ class TaLibProcessor:
     def _static_blueprint(self):
         return self._STATIC_BLUEPRINT.copy()
     
-

@@ -1,3 +1,4 @@
+import functools
 import ccxt
 import pandas as pd
 import numpy as numpy
@@ -95,6 +96,51 @@ class CryptoFetcher:
 # ===================================================================================
 # STOCK FETCHER
 # ===================================================================================
+
+
+# =========================================
+# Stock Design:
+# 
+#   {   
+#       'ticker' : ticker_name
+#       'data' : {timeframe, since, limit, period, ohlcv}
+# 
+# 
+# 
+#   }
+# =========================================
+
+class Stock:
+
+    _ticker = None
+    _data = None
+    _features = None
+    _metadata = None
+
+    def __init__(self) -> None:
+        pass
+
+    def set_data(self, ticker, data, **kwargs):
+        
+        self._data = data
+        self._ticker = ticker
+
+        if kwargs:
+
+            for key, val in kwargs:
+                self._metadata = set((key, val))
+
+    def _info(self):
+
+        info_dict = {
+            'ticker' : self._ticker, 
+            'data': self._data, 
+            'features': self._features if self._features is not None else None,
+            'metadata': self._metadata,
+        }
+
+        return info_dict
+
 
 class StockFetcher:
 

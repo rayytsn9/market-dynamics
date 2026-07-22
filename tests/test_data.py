@@ -1,5 +1,6 @@
 import pytest
 from src.data.processor import TaLibProcessor
+from src.data.models import Stock
 import pandas as pd
 
 from tests.conftest import ta_processor
@@ -23,7 +24,21 @@ class TestStockFetcher:
     @pytest.mark.pipeline
     def test_workflow(self):
         pass
-    
+
+class TestStock:
+
+    @pytest.mark.stock
+    def test_stock(self, sample_market_data):
+
+        ticker = 'AAPL'
+        stock_obj = Stock()
+        stock_obj.set_data(ticker=ticker, data=sample_market_data)
+
+        for key, val in stock_obj._info().items():
+            print(f'--------------- {key} ----------------')
+            print(val)
+            print(f'--------------------------------------')
+  
 class TestTAlibProcessor:
 
     @pytest.mark.pipeline

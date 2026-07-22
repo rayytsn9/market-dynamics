@@ -32,7 +32,6 @@ class TestTa:
             assert len(processor._static_blueprint) == len(invalid_ta_map)
 
             
-
     @classmethod
     def _update_metrics(cls, indicator: str, status: str):
 

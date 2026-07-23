@@ -4,11 +4,11 @@ import pandas as pd
 # =========================================
 # Stock Design:
 # 
-#   {   
+# members :  {   
 #       'ticker' : ticker_name
-#       'data' : {timeframe, since, limit, period, ohlcv}
-# 
-# 
+#       'data' : pd.DataFrame(ohlcv)
+#       'features' : dict[str, Feature]
+#       'metadata' : parameters e.g. since, period, limit, ...
 # 
 #   }
 # =========================================
@@ -18,7 +18,6 @@ class Stock:
     def __init__(self) -> None:
         self._ticker: str | None = None
         self._data: pd.DataFrame | None = None
-        self._features: dict[str, "Feature"] = {}
         self._metadata: dict[str, any] = {} 
         
 
@@ -28,7 +27,6 @@ class Stock:
         self._ticker = ticker
 
         if kwargs:
-
             for key, val in kwargs.items():
                 self._metadata[key] = val
 

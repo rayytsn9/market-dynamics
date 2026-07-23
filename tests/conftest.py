@@ -70,7 +70,6 @@ def pytest_generate_tests(metafunc):
 
     TARGET_ARGUMENTS = ['indicator_data']
     
-
     for target_arg in TARGET_ARGUMENTS:
 
         if target_arg in metafunc.fixturenames and target_arg == 'indicator_data':

@@ -52,34 +52,34 @@ Markov Transition Model
 
 ```text
 market-dynamics/
-├── analysis/
-│   ├── covariance.py        # Covariance and correlation analysis
-│   ├── mp.py                # Marchenko–Pastur noise analysis
-│   └── pca.py               # PCA computation and transformations
-│
-├── data/
-│   ├── fetcher.py           # Market data collection
-│   └── processor.py         # Data cleaning and preprocessing
-│
-├── interpretation/
-│   ├── loadings.py          # Principal-component loading interpretation
-│   └── regimes.py           # Market regime analysis
-│
-├── visualization/
-│   ├── eigenvalues.py       # Eigenvalue and explained-variance plots
-│   ├── loadings.py          # Loading visualizations
-│   └── projection.py        # PCA projection visualizations
-│
 ├── notebooks/
-│   ├── ccxt.ipynb           # Data exploration and experimentation
-│   └── *.csv                # Local research datasets
+│   └── ccxt.ipynb                  # Exploratory research and experimentation
 │
-├── dashboard.py             # Interactive dashboard
-├── main.py                  # Main research workflow
-├── config.py                # Project configuration
-├── utils.py                 # Shared utility functions
-├── test_functions.py        # Tests
-├── requirements.txt         # Python dependencies
+├── src/
+│   ├── analysis/
+│   │   ├── __init__.py
+│   │   ├── covariance.py           # Covariance and correlation analysis
+│   │   ├── mp.py                   # Marchenko–Pastur noise analysis
+│   │   └── pca.py                  # PCA computation and transformations
+│   │
+│   └── data/
+│       ├── __init__.py
+│       ├── fetcher.py              # Market data collection
+│       ├── models.py               # Data models and schema definitions
+│       ├── processor.py            # Data preprocessing and indicator generation
+│       └── utils.py                # Shared data-layer utilities
+│
+├── tests/
+│   ├── __init__.py
+│   ├── conftest.py                 # Fixtures and dynamic pytest test generation
+│   ├── test_data.py                # Data pipeline tests
+│   └── test_ta_lib.py              # TA-Lib indicator mapping and execution tests
+│
+├── .gitignore
+├── config.py                       # Project-wide configuration
+├── main.py                         # Main research workflow / entry point
+├── pytest.ini                      # Pytest configuration and custom markers
+├── requirements.txt                # Python dependencies
 └── README.md
 ```
 

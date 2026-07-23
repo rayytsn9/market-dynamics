@@ -5,6 +5,7 @@ import src.analysis.covariance as covariance
 import src.analysis.pca as pca
 import pandas as pd
 from src.data.processor import TaLibProcessor
+import src.data.models as models
 
 
 def main():
@@ -35,29 +36,10 @@ def main():
             df = pd.DataFrame(config.StockConfig.INDICATORS)
             return df
 
-        def test_working_TI():
+        def feature_pipeline():
+            pass
 
-            df = fetcher.StockFetcher.fetch_ohlcv(config.StockConfig.ASSETS[0], period='6mo')
-            talib_map = {key: val for key, val in config.StockConfig.TALIB_MAP.items() if val is not None}
 
-            
-            TaLibProcessor.instantiate_factory(talib_map)
-
-            processor = TaLibProcessor()
-            
-            indicator_dict = {key: processor.compute(key, df) for key, val in talib_map.items()}
-
-            seen_TI = set()
-            unseen_TI = set()
-
-            for key in indicator_dict.keys():
-                seen_TI.add(key)
-
-            for key in config.StockConfig.TALIB_MAP.keys():
-                if key not in seen_TI:
-                    unseen_TI.add(key)
-
-        
 
 
 

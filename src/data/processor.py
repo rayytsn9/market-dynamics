@@ -4,7 +4,6 @@ import pandas as pd
 import talib.abstract as ta
 import inspect
 import config
-from fetcher import Stock
 
 
 class CryptoProcessor:

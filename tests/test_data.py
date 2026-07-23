@@ -6,7 +6,11 @@ import pandas as pd
 from tests.conftest import ta_processor
 
 
-
+# =========================================
+# 
+#           Fetcher
+# 
+# =========================================
 class TestStockFetcher:
     
     @pytest.mark.fast
@@ -25,20 +29,12 @@ class TestStockFetcher:
     def test_workflow(self):
         pass
 
-class TestStock:
 
-    @pytest.mark.stock
-    def test_stock(self, sample_market_data):
-
-        ticker = 'AAPL'
-        stock_obj = Stock()
-        stock_obj.set_data(ticker=ticker, data=sample_market_data)
-
-        for key, val in stock_obj._info().items():
-            print(f'--------------- {key} ----------------')
-            print(val)
-            print(f'--------------------------------------')
-  
+# =========================================
+# 
+#           Processor
+# 
+# =========================================
 class TestTAlibProcessor:
 
     @pytest.mark.pipeline
@@ -58,3 +54,30 @@ class TestTAlibProcessor:
             print(f'====================================================')
 
         print(len(indicator_dict))
+
+
+# =========================================
+# 
+#           Models
+# 
+# =========================================
+class TestStock:
+
+    @pytest.mark.stock
+    def test_stock(self, sample_market_data):
+
+        ticker = 'AAPL'
+        stock_obj = Stock()
+        stock_obj.set_data(ticker=ticker, data=sample_market_data)
+
+        for key, val in stock_obj._info.items():
+            print(f'--------------- {key} ----------------')
+            print(val)
+            print(f'--------------------------------------')
+  
+
+class TestFeature:
+
+    @pytest.mark.feature
+    def test_feature(self, sample_market_data):
+        pass

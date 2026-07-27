@@ -1,19 +1,13 @@
+from dataclasses import dataclass
+from datarepository import DataRepository
 import pandas as pd
 
 
 # =========================================
-# Stock Design:
+# Stock Design: Value Object -> a change 
 # 
-# members :  {   
-#       'ticker' : ticker_name
-#       'data' : pd.DataFrame(ohlcv)
-#       'features' : dict[str, Feature]
-#       'metadata' : parameters e.g. since, period, limit, ...
-# 
-#   }
 # =========================================
-
-class Stock:
+class Stock_Deprecated:
 
     def __init__(self) -> None:
         self._ticker: str | None = None
@@ -42,12 +36,57 @@ class Stock:
 
         return info_dict
 
+@dataclass(frozen=True)
+class Stock(DataRepository):
+    ticker: str
+    data: pd.DataFrame
+    metadata: dict[str, any] = None
+
+    def info(self):
+        return {
+            'ticker': self.ticker,
+            'data': self.data,
+            'metadata': self.metadata if self.metadata is not None else {},
+        }
+
+    def set_data(self, ticker, data, **kwargs):
+        
+        self.data = data
+        self.ticker = ticker
+
+        if kwargs:
+            for key, val in kwargs.items():
+                self.metadata[key] = val
+
+    def add(self, **kwargs):
+        if kwargs:
+            for key, val in kwargs.items():
+                if key not in self.metadata:
+                    self.metadata[key] = val
+                else:
+                    raise KeyError(f'key : {key} already exists')
+
+
+    def get(self, **kwargs):
+        if kwargs:
+            if 'ticker' in kwargs.keys():
+                return (self.data, self.metadata.copy())
+
+
 # =========================================
 # Feature Design:
 # 
 # cache with metadata = asset_type='stock' or 'crypto' etc
 # =========================================
-class Feature:
+class Feature(DataRepository):
+
+    ticker: str
+    data: pd.DataFrame
+    metadata: dict[str, any] = None
+
+    def set_data(self, ticker, data, **kwargs):
+        self.ticker = ticker
+        self.data = data
 
     def __init__(self) -> None:
         self.asset : "Stock" | None = None
@@ -76,3 +115,10 @@ class Feature:
 
     def standardize(self):
         pass
+
+    def add(self, **kwargs):
+        pass
+
+    def get(self, **kwargs):
+        pass
+

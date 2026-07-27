@@ -1,9 +1,6 @@
-from ccxt.static_dependencies.toolz.curried import second
 import numpy as np
 import pandas as pd
 import talib.abstract as ta
-import inspect
-import config
 
 
 class CryptoProcessor:

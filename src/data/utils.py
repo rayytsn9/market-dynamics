@@ -1,6 +1,6 @@
 import datetime as dt
-from processor import TaLibProcessor
-import fetcher as fetcher
+from src.data.processor import TaLibProcessor
+from src.data import fetcher as fetcher
 import config
 
 def get_since(N, timeframe='1d', from_time=None):

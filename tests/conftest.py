@@ -24,13 +24,11 @@ def working_ta_map():
     talib_map = {key: val for key, val in config.StockConfig.TALIB_MAP.items() if val is not None}
     yield talib_map
     
-
 @pytest.fixture(scope='function')
 def ta_map():
     
     talib_map = config.StockConfig.TALIB_MAP
     yield talib_map
-
 
 @pytest.fixture(scope='function')
 def ta_processor(ta_map):
@@ -43,7 +41,6 @@ def ta_processor(ta_map):
 
     TaLibProcessor._STATIC_BLUEPRINT = None
     print('Tearing down ta processor')
-
 
 @pytest.fixture(scope='session')
 def sample_market_data():
@@ -92,7 +89,6 @@ def pytest_generate_tests(metafunc):
                 parametrized_cases.append(test_case)
 
             metafunc.parametrize(argnames=target_arg,argvalues=parametrized_cases)
-
 
 def pytest_terminal_summary(terminalreporter):
     """

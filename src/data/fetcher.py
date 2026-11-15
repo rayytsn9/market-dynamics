@@ -130,7 +130,8 @@ class StockFetcher:
             if StockFetcher.has_ohlcv(symbol):
                 df = yf.Ticker(symbol).history(period=period, interval=timeframe)
                 df = df.reset_index()
-                df.columns = ['timestamp', 'open', 'high', 'low', 'close', 'volume', 'dividends', 'stock_splits', 'capital_gains']
+                df.columns = [str(col).lower().replace(' ', '_') for col in df.columns]
+                df = df.rename(columns={'date': 'timestamp', 'datetime': 'timestamp'})
             else:
                 raise ValueError(f'failed to fetch {symbol}')
         else:
@@ -141,7 +142,3 @@ class StockFetcher:
         df.set_index('timestamp', inplace=True)
 
         return df
-    
-    @staticmethod
-    def fetch_TA(indicators: list) -> pd.DataFrame:
-        pass

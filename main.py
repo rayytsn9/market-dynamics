@@ -3,10 +3,12 @@ import src.data.fetcher as fetcher
 import src.data.processor as processor
 import src.analysis.covariance as covariance
 import src.analysis.pca as pca
+from src.data.dataset import NoCommonIndicators, build_asset_matrix
+from src.data.processor import TaLibProcessor, indicators_common_to
+from src.data.fetcher import StockFetcher
 import pandas as pd
-from src.data.processor import TaLibProcessor
-import src.data.models as models
-
+import sys
+from pathlib import Path
 
 def main():
 
@@ -23,28 +25,21 @@ def main():
         print(ohlcv.keys())
 
     elif config.STOCKS:
-        
-        def test_fetch_assetDataFrame():
-            df = fetcher.StockFetcher.fetch_assetDataFrame(config.StockConfig.ASSETS[:2], period='6mo')
-            return df
-        
-        def test_fetch_ohlcv():
-            df = fetcher.StockFetcher.fetch_ohlcv('SPY', period='6mo')
-            return df
+        TaLibProcessor.instantiate_factory(config.StockConfig.TALIB_MAP)
+        try:
+            matrix = build_asset_matrix(TaLibProcessor())
+        except NoCommonIndicators as exc:
+            print(exc)
+            sys.exit(1)
+        else:
+            out = Path(__file__).resolve().parent / 'data' / 'asset_indicator_matrix.csv'
+            out.parent.mkdir(parents=True, exist_ok=True)
+            matrix.to_csv(out)
+            print(matrix.shape)
+            print(out)
 
-        def test_config_indicators():
-            df = pd.DataFrame(config.StockConfig.INDICATORS)
-            return df
-
-        def feature_pipeline():
-            pass
 
         
-
-
-
-
-
 
 if __name__ == "__main__":
     main()

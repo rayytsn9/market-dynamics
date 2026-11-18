@@ -1,0 +1,533 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{microtype}
+
+\title{Methods for the diagnostic principal-component analysis\\ of a six-asset technical-indicator matrix}
+\author{}
+\date{17 November 2026}
+
+\newcommand{\tr}{\mathsf{tr}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note records the statistical methods that have been fitted in the \texttt{AI-trades/} experiment and no others.
+Two representations of the same \(6{,}025\times 228\) indicator matrix are retained: the stored columns, and a price-relative transformation of the \(132\) columns whose units are prices or price differences.
+Each representation is standardized and decomposed on rows through 31~December~2018 only.
+Component-retention rules, including a classical Marchenko--Pastur edge, are compared and are not selected.
+Section~\ref{sec:roadmap} records the proposed Capstone LDI roadmap.
+Stages~3--7 of that roadmap are not fitted methods.
+\end{abstract}
+
+\section{Scope}
+
+The research program writes \path{data/asset_indicator_matrix.csv} from \texttt{main.py}.
+The experiment reads that file and does not import the research package.
+A method appears below only when the corresponding fit or check has been run and saved.
+Quantities that were computed and then rejected as decision rules are identified as such.
+The checkpoint is the second diagnostic decomposition, stored as \texttt{stage2\_price\_relative\_train2018\_v1}.
+Sections from Section~\ref{sec:data} onward describe that fitted work.
+They do not implement the later roadmap stages.
+
+\section{Research Architecture, Milestones, and Deliverables}
+\label{sec:roadmap}
+
+This section is the Capstone LDI research roadmap.
+Roadmap Stages~0 and~1 are complete.
+Later stages are plans, and updating this note does not accept them.
+The saved model directories use an earlier internal numbering.
+\path{models/stage1_train2018_v1/} is the raw-matrix diagnostic PCA.
+\path{models/stage2_price_relative_train2018_v1/} is the price-relative diagnostic PCA.
+Under the numbering below, those two fits are evidence inside Stages~1 and~2.
+Roadmap Stage~1 is closed by the approval recorded in that stage.
+Roadmap Stage~2 is not closed.
+Writing this section does not approve Stage~3.
+
+\subsection{Stage-completion policy}
+
+A stage is complete only after its artifacts exist, validation passes, documentation is updated, and the project owner explicitly approves it.
+Stage~0 retains the complete status recorded when this roadmap was added.
+From Stage~1 onward, that status is not changed to complete by writing artifacts or by updating this note.
+
+\subsection{Stage 0 --- Feature Engineering}
+
+\textbf{Objective.} Construct the historical multi-asset technical-indicator matrix.
+
+\textbf{Deliverable.} The unstandardized file \path{asset_indicator_matrix.csv}.
+
+\textbf{Status.} Complete.
+That file is the research matrix described in Section~\ref{sec:data}.
+This experiment reads it and does not write it.
+
+\subsection{Stage 1 --- Data Preparation and Statistical Validation}
+
+\textbf{Objective.} Audit feature definitions, normalize price-denominated indicators, and establish leakage-safe standardization.
+
+\textbf{Deliverables.} A reusable transformed and standardized feature matrix, the fitted preprocessing pipeline, transformation metadata, and validation diagnostics.
+
+\textbf{Status.} Complete / Approved on 17~November~2026.
+The approved artifact is \path{AI-trades/artifacts/stage1_price_relative_standardized_v2/}.
+The four completion gates are satisfied: the artifacts exist, the validation checks recorded below passed, this note records them, and the project owner has approved the stage.
+No column count or retention rule was selected as part of Stage~1.
+
+The export is a package of the price-relative map in Section~\ref{sec:transform} and the frozen scaler
+\begin{center}
+\path{models/stage2_price_relative_train2018_v1/scaler.joblib}.
+\end{center}
+That scaler was not refit.
+The directory is \path{AI-trades/artifacts/stage1_price_relative_standardized_v1/}, created 2026-11-17T21:55:47Z.
+It contains \path{feature_matrix_standardized.csv}, \path{preprocessing_pipeline.joblib}, \path{feature_metadata.json}, and \path{validation_report.md}.
+The matrix has \(6{,}025\) rows and \(228\) columns.
+Its columns keep the source MultiIndex: the CSV has an asset header row, an indicator header row, and a date index, and it is read back with \texttt{header=[0,1]} and \texttt{index\_col=0}.
+The \(4{,}044\) training rows have maximum absolute column mean \(2.09\times 10^{-14}\) and maximum absolute gap from unit population variance \(4.44\times 10^{-16}\).
+The other \(1{,}981\) rows were transformed with the same frozen scaler.
+That scaler records \(4{,}044\) samples, and the largest absolute test-column mean is \(0.746\), so the full sample was not used to standardize.
+The training block matches the Stage~2 standardized PCA input with maximum absolute error \(0\) against the saved scaler's affine map and against the saved PCA training mean.
+Reloading the pipeline and applying it to the same inputs reproduces the exported matrix with maximum absolute error \(0\).
+The CSV round trip differs by at most \(3.55\times 10^{-15}\).
+The source hash and adjusted-close hash match the Stage~2 metadata.
+The numerical record is \path{artifacts/stage1_price_relative_standardized_v1/validation_report.md}.
+That v1 joblib file is historical evidence.
+It names the class \texttt{\_\_main\_\_.FrozenPriceRelativePreprocessor}.
+That name does not load in a fresh interpreter.
+The portable Stage~1 artifact is
+\path{artifacts/stage1_price_relative_standardized_v2/},
+created 2026-11-17T22:10:39Z.
+
+Its class is \texttt{ai\_trades.preprocessing.FrozenPriceRelativePreprocessor}.
+The v2 standardized matrix is a byte-for-byte copy of the v1 matrix.
+The scaler was not refit and still records \(4{,}044\) observations.
+A fresh process loaded v2 with ordinary \texttt{joblib.load}.
+On 2026-11-04 through 2026-11-17 the resulting \(10\times 228\) matrix differed from v1 by at most \(8.882\times 10^{-16}\), and a repeated call differed by zero.
+The v2 record is \path{artifacts/stage1_price_relative_standardized_v2/validation_report.md}.
+
+\subsection{Stage 2 --- PCA and Random Matrix Analysis}
+
+\textbf{Objective.} Extract principal components and study the eigenvalue spectrum, redundancy, and candidate retention rules.
+
+\textbf{Deliverables.} A time-indexed PCA score matrix, loadings, eigenvalues, explained variance, retention candidates, and diagnostics.
+
+\textbf{Status.} Pending --- awaiting the next research session.
+That session is to begin with a conceptual and mathematical review of principal components before any new implementation.
+The diagnostic fits already saved are described below.
+They are not the completed Stage~2 deliverable, and approval of Stage~1 does not start Stage~2.
+Both saved decompositions report eigenvalues, explained-variance comparisons, retention candidates, and diagnostics.
+The reports are \path{reports/stage1_diagnostics_v1.md} and \path{reports/stage2_diagnostics_v1.md}.
+A reusable time-indexed score matrix has not been exported as a stage deliverable, and no retention rule has been selected.
+The Marchenko--Pastur calculations in Section~\ref{sec:mp} remain diagnostics.
+
+\subsection{Stage 3 --- Market Regime Identification}
+
+\textbf{Objective.} Identify statistically stable, recurring market regimes using unsupervised clustering.
+
+\textbf{Deliverables.} Historical regime classifications, a saved clustering model, stability diagnostics, and regime interpretation.
+
+\textbf{Status.} Planned.
+No clustering model has been fit.
+
+\subsection{Stage 4 --- Markov Regime Dynamics}
+
+\textbf{Objective.} Estimate regime transitions and multi-session regime probabilities.
+
+\textbf{Deliverables.} A transition matrix, five- and ten-session regime distributions, and transition-model diagnostics.
+
+\textbf{Status.} Planned.
+No transition matrix has been estimated.
+
+\subsection{Stage 5 --- Conditional Return Modeling}
+
+\textbf{Objective.} Estimate and evaluate regime-conditioned QQQ return distributions.
+
+\textbf{Deliverables.} Five- and ten-session return forecasts, uncertainty estimates, and out-of-sample validation.
+
+\textbf{Status.} Planned.
+No conditional return distribution has been estimated.
+Test-period profitability is not available as a criterion for choices in Stages~1 or~2.
+
+\subsection{Stage 6 --- Strategy Validation}
+
+\textbf{Objective.} Translate forecasts into testable trading rules and evaluate performance.
+
+\textbf{Deliverables.} A reproducible backtest, transaction-cost assumptions, benchmark comparisons, drawdown analysis, and a performance report.
+
+\textbf{Status.} Planned.
+No trading rule or backtest has been run.
+
+\subsection{Stage 7 --- Paper Trading}
+
+\textbf{Objective.} Evaluate the strategy under realistic forward-looking conditions.
+
+\textbf{Deliverables.} Daily signal reports, a dated paper-trading log of those signals, and a standing constraint that a report does not submit an order.
+Until a validated rule exists, the default signal is no trade.
+A daily report would apply a previously fitted model to the latest row and would not refit that model.
+
+\textbf{Status.} Planned.
+No signal report or paper-trading log has been produced.
+
+\section{Data and timing conventions}
+\label{sec:data}
+
+Let \(t\) index exchange sessions and let
+\[
+\mathcal{A}=\{\mathrm{SPY},\mathrm{QQQ},\mathrm{IWM},\mathrm{TLT},\texttt{\^{}VIX},\texttt{DX-Y.NYB}\}
+\]
+be the asset universe.
+The observed matrix \(X\) has one row per session and columns \((a,j)\) for \(a\in\mathcal{A}\) and \(j\) in a set of \(38\) indicators, so \(p=6\times 38=228\).
+The archived copy used by both fits is \path{AI-trades/data/feature_matrix_v1.csv}:
+\(n=6{,}025\) rows, from 4~December~2002 through 17~November~2026, SHA-256
+\begin{center}
+\path{4ecefa23bb0321deea57d55a05bc45cba11424ba852554ae40b1e3666ed457ad}.
+\end{center}
+The matrix contains no missing values.
+A later hash of the research file is copied to the next \texttt{feature\_matrix\_v\(N\).csv} and appended to \path{data/manifest.jsonl}.
+An existing snapshot is not replaced.
+No second feature-matrix version has been produced.
+
+Timestamps are reduced to a timezone-naive calendar date by discarding the timezone and keeping the exchange wall-clock date.
+They are not converted to UTC before the date is taken.
+This matters because \texttt{\^{}VIX} is timestamped in America/Chicago and the other series in America/New\_York, and because daylight-saving offsets change inside a series.
+
+The stage-1 price audit uses \path{data/qqq_ohlc_v1.csv}: \(6{,}967\) rows, 10~March~1999 through 17~November~2026, SHA-256
+\begin{center}
+\path{963c176144439ec6a6bc31b76c4b045799685d6da9f05ded0c0f3393bd63adbe}.
+\end{center}
+That file retains raw open, high, low, and close, the vendor adjusted close, and auto-adjusted OHLC.
+Stage~2 prices for all six assets are the adjusted panel \path{data/asset_ohlc_main_convention_v1.csv} and the raw panel \path{data/asset_ohlc_raw_v1.csv}.
+Both panels have \(14{,}191\) rows on the union of the six calendars, beginning 5~January~1971 because of \texttt{DX-Y.NYB}.
+Per-asset calculations drop rows that lack a finite open, high, low, and close rather than feeding the padded union to the indicator library.
+
+\section{Price convention and consistency of the stored indicators}
+\label{sec:prices}
+
+The adjusted download calls \texttt{Ticker.history(period='max', interval='1d')} and does not pass \texttt{auto\_adjust}.
+In the installed yfinance that argument defaults to true, which is the call made by the research fetcher.
+The first downloaded row is dropped together with the missing log return, matching that fetcher.
+The raw panel passes \texttt{auto\_adjust=False} and is used only to show that unadjusted equity closes do not reproduce the stored indicators.
+The recorded median absolute gaps between adjusted and raw closes are \$31.32 (SPY), \$6.94 (QQQ), \$13.89 (IWM), \$33.68 (TLT), and zero for \texttt{\^{}VIX} and \texttt{DX-Y.NYB}.
+
+The stage-2 fit uses the stored indicator values.
+A TA-Lib recomputation, with that library's default arguments, is a consistency check and is not substituted for \(X\).
+Write \(x\) for a stored series and \(\hat x\) for the recomputation on adjusted OHLC.
+The check requires, for every asset and indicator,
+\[
+\operatorname{Corr}(x,\hat x)\ge 0.999,
+\qquad
+\operatorname{median}_t\frac{|x_t-\hat x_t|}{\max(|x_t|,10^{-6})}\le 10^{-3},
+\]
+a finite positive adjusted close on every feature date, and agreement between the assigned unit family and the empirical rule in Section~\ref{sec:transform}.
+The check passed.
+The weakest correlation with the adjusted recomputation is \(0.999208\).
+The adjusted-panel SHA-256 is
+\begin{center}
+\path{7e9317cbc535e850cdb34c4aae87cb7f8a826b9ea948b415d8ab29e62c309a6c},
+\end{center}
+and the raw-panel SHA-256 is
+\begin{center}
+\path{f486dfa34996f0b1e18a7df5307f4c87cab7f0155cd9cbcd8e9fb5820bd35d8f}.
+\end{center}
+Both are stored in the stage-2 model metadata, whose creation time is 2026-11-17T21:17:22Z.
+The stage-1 metadata records the same feature hash, the QQQ file hash above, and creation time 2026-11-17T20:52:14Z.
+
+\section{Feature preprocessing}
+\label{sec:transform}
+
+\subsection{Stage 1}
+
+Stage~1 leaves every stored column unchanged.
+Its model directory is \texttt{stage1\_train2018\_v1}.
+
+\subsection{Price-relative transformation}
+
+Stage~2 changes \(132\) columns and leaves \(96\) unchanged.
+Let \(C_{a,t}>0\) be the adjusted close of asset \(a\) on the same date \(t\) as the feature.
+For a price-level series \(L_{a,t}\) and a price-width series \(V_{a,t}\),
+\begin{equation}
+\label{eq:ratios}
+Y^{\mathrm{level}}_{a,t}=\frac{L_{a,t}}{C_{a,t}}-1,
+\qquad
+Y^{\mathrm{width}}_{a,t}=\frac{V_{a,t}}{C_{a,t}}.
+\end{equation}
+Scale-free columns are copied.
+Any non-finite result stops the fit.
+The formulas and the column list are stored in the stage-2 \path{metadata.json}.
+
+The level family has \(14\) indicators and therefore \(84\) columns: exponential, Kaufman, simple, triple-exponential, and weighted moving averages; linear regression and the linear-regression indicator; median price, typical price, and weighted close; parabolic SAR; and the three Bollinger bands.
+The width family has \(8\) indicators and \(48\) columns: average true range, true range, standard deviation, high minus low, MACD, the MACD histogram, ten-day momentum, and the moving-average oscillator.
+The unchanged family has \(16\) indicators and \(96\) columns, including the percentage-price oscillator, the high/low ratio, rate of change, TRIX, the bounded oscillators, and the commodity channel index.
+Volume indicators are absent because \texttt{\^{}VIX} and \texttt{DX-Y.NYB} do not supply a usable volume series.
+
+\subsection{Why the ratios, and what they do not do}
+
+Stage~1 showed that columns denominated in price leave the 2002--2018 training distribution after 2018.
+On that fit the first principal-component score has test mean \(39.02\), and the largest training-standardized column shift is the QQQ average true range, with test mean \(9.24\).
+Bollinger bands move with the close, so dividing a band by a range would have treated a price level as a width.
+The ratios in \eqref{eq:ratios} remove the nominal price unit: a level becomes a fractional gap from the same-day close, and a width becomes a fraction of that close.
+
+They do not imply stationarity.
+A moving average of a trending price remains a smooth, highly persistent series after \eqref{eq:ratios}, and several such averages of the same close remain nearly collinear.
+The leading correlation eigenvalue accordingly stays near \(61\), moving only from \(62.03\) to \(61.14\), while the participation ratio moves from \(7.87\) to \(9.60\).
+Volatility differences also remain.
+The largest absolute column-mean shift after the ratios is the dollar-index average true range, at \(-0.75\) training standard deviations.
+The first-component test mean does fall from \(39.02\) to \(-0.38\), which is evidence about the price-era location shift and not evidence of forecast value.
+
+The same-day close is known to a decision made after the close of \(t\).
+It would be look-ahead for a decision made at the open of \(t\).
+No execution rule is implemented, so this distinction is recorded rather than resolved by a trading convention.
+
+\subsection{Assignment of units}
+
+Families were assigned from the QQQ series before the transformation was accepted.
+Let \(P_t\) be the QQQ adjusted close and \(R_t=H_t-L_t\) the same-day dollar range.
+A column is a level when its correlation with \(P\) is at least \(0.98\) and its median ratio to \(P\) exceeds \(1/2\).
+Otherwise it is a width when its correlation with \(R\) is at least \(0.80\) and exceeds its correlation with \(R/P\), or its correlation with the ten-day dollar change \(\Delta_{10}P\) is at least \(0.80\) and exceeds its correlation with the ten-day percent change, or that dollar-change correlation exceeds the percent-change correlation by more than \(0.15\), is itself above \(0.40\), and the median of \(|x|/P\) is below \(0.05\).
+Every other column is scale-free.
+Under these rules the Bollinger bands have correlation about \(1\) with the close and a median ratio about \(1.01\), so they are levels.
+Standard deviation has correlation \(0.77\) with the close and \(0.82\) with the dollar range, so it is a width.
+The empirical family matched the assigned family for all \(38\) indicators.
+
+A different rule was computed and rejected.
+The cross-asset slope of median absolute feature value against median price does not separate widths from oscillators: average true range had a slope of about \(-0.12\) because its dollar values are similar across assets whose prices are not.
+That slope was not used to assign \eqref{eq:ratios}.
+
+\section{Standardization}
+\label{sec:scale}
+
+Both fits use the same training-only standardization.
+Let \(X_{\mathrm{tr}}\) be the \(n_{\mathrm{tr}}\times p\) training block of the matrix being decomposed, with \(n_{\mathrm{tr}}=4{,}044\).
+The training standard deviation of column \(j\) is the population quantity
+\begin{equation}
+\label{eq:std}
+s_j=\left(\frac{1}{n_{\mathrm{tr}}}\sum_{i=1}^{n_{\mathrm{tr}}}(X_{\mathrm{tr},ij}-\bar X_{\mathrm{tr},j})^2\right)^{1/2}.
+\end{equation}
+A column with \(s_j\le 10^{-12}\) is dropped.
+Neither fit dropped a column.
+The retained block is passed to \texttt{StandardScaler}, which subtracts the training mean and divides by \eqref{eq:std}.
+The resulting matrix \(Z_{\mathrm{tr}}\) has column means zero and column variances one under the \(1/n_{\mathrm{tr}}\) divisor.
+The scaler records \(n_{\mathrm{samples\_seen\_}}=4{,}044\).
+
+Test rows are transformed with those training means and standard deviations.
+They are not used to recompute either.
+The \(6{,}025\times 228\) matrix produced by applying this frozen map to every row is stored at \path{AI-trades/artifacts/stage1_price_relative_standardized_v1/feature_matrix_standardized.csv}.
+The same bytes are copied to \path{AI-trades/artifacts/stage1_price_relative_standardized_v2/feature_matrix_standardized.csv}.
+The portable loader is the v2 pipeline described in Section~\ref{sec:roadmap}.
+Full-sample standardization was not performed.
+Standardization equalizes training variance across assets and indicators.
+It does not keep a later price level inside the training distribution; that is the shift measured in Section~\ref{sec:numbers}.
+
+\section{Principal components and the two variance conventions}
+\label{sec:pca}
+
+\subsection{The fitted decomposition}
+
+On \(Z_{\mathrm{tr}}\), a full singular-value decomposition is fit with scikit-learn's \texttt{PCA(svd\_solver='full')}.
+If \(Z_{\mathrm{tr}}=U\Sigma W^{\top}\) with singular values \(\sigma_1\ge\cdots\ge\sigma_p\), the principal-component scores of a standardized row \(z\) are
+\[
+f=W^{\top}z.
+\]
+Test scores use the training \(W\) and the training standardization.
+No component is dropped before this diagnostic fit.
+
+\subsection{The \texorpdfstring{\(1/n\)}{1/n} correlation matrix}
+
+Marchenko--Pastur calculations use
+\begin{equation}
+\label{eq:sn}
+S=\frac{1}{n_{\mathrm{tr}}}Z_{\mathrm{tr}}^{\top}Z_{\mathrm{tr}}.
+\end{equation}
+Because each column of \(Z_{\mathrm{tr}}\) has \(1/n_{\mathrm{tr}}\) variance one, \(\tr(S)=p\) and the mean eigenvalue of \(S\) is \(1\).
+The eigenvalues \(\lambda_1\ge\cdots\ge\lambda_p\) of \(S\) are computed with a symmetric eigensolver.
+Negative values of magnitude about \(10^{-15}\), which are numerical zeros, are clipped to zero.
+These \(\lambda_k\) satisfy
+\begin{equation}
+\label{eq:singular}
+\lambda_k=\frac{\sigma_k^2}{n_{\mathrm{tr}}}.
+\end{equation}
+
+\subsection{Scikit-learn's \texorpdfstring{\(1/(n-1)\)}{1/(n-1)} explained variance}
+
+Scikit-learn does not report \(\lambda_k\).
+Its \texttt{explained\_variance\_} attribute scales squared singular values by the unbiased divisor,
+\begin{equation}
+\label{eq:sklearn}
+\hat\lambda_k=\frac{\sigma_k^2}{n_{\mathrm{tr}}-1}.
+\end{equation}
+Combining \eqref{eq:singular} and \eqref{eq:sklearn} gives the exact conversion used in the code,
+\begin{equation}
+\label{eq:convert}
+\lambda_k=\hat\lambda_k\cdot\frac{n_{\mathrm{tr}}-1}{n_{\mathrm{tr}}}.
+\end{equation}
+The two vectors are compared after this rescaling.
+On the stage-1 spectrum their maximum absolute difference is \(9.237\times 10^{-14}\), inside the stored tolerance of \(10^{-6}\).
+The \(1/(n-1)\) numbers are not passed to the Marchenko--Pastur edge.
+Using them there would inflate every eigenvalue by \(n_{\mathrm{tr}}/(n_{\mathrm{tr}}-1)\) and would make the mean eigenvalue \(n_{\mathrm{tr}}/(n_{\mathrm{tr}}-1)\) rather than \(1\).
+
+The participation ratio, or effective rank, is computed on the \(1/n_{\mathrm{tr}}\) spectrum:
+\begin{equation}
+\label{eq:pr}
+\operatorname{PR}(\lambda)=\frac{\bigl(\sum_{k=1}^{p}\lambda_k\bigr)^2}{\sum_{k=1}^{p}\lambda_k^2}.
+\end{equation}
+It equals \(1\) when one component carries all of the trace and equals \(p\) when every eigenvalue is equal.
+
+\section{Marchenko--Pastur diagnostics}
+\label{sec:mp}
+
+\subsection{Classical edge}
+
+Let \(\gamma=p/n_{\mathrm{tr}}\).
+Here \(p=228\) and \(n_{\mathrm{tr}}=4{,}044\), so
+\[
+\gamma=\frac{228}{4044}=0.056380.
+\]
+For an \(n\times p\) matrix with i.i.d.\ entries of mean zero and variance \(\sigma^2\), the Marchenko--Pastur theorem places the limiting bulk of \(S\) on
+\begin{equation}
+\label{eq:mp}
+\bigl[\lambda_-,\lambda_+\bigr]
+=\Bigl[\sigma^2\bigl(1-\sqrt{\gamma}\bigr)^2,\;
+\sigma^2\bigl(1+\sqrt{\gamma}\bigr)^2\Bigr],
+\end{equation}
+when \(p,n\to\infty\) with \(p/n\to\gamma\in(0,1]\).
+At the reference value \(\sigma^2=1\) suggested by column standardization,
+\[
+\lambda_-=0.581491,\qquad\lambda_+=1.531269.
+\]
+The diagnostic count is the number of eigenvalues strictly above \(\lambda_+\).
+The code does not fit the Marchenko--Pastur density, does not estimate a spiked covariance model, and does not treat an exceedance as a selected factor.
+
+\subsection{Rules that are reported and not applied}
+
+The following counts are written side by side.
+Both model files set \texttt{retention\_rule\_selected} to null.
+
+\begin{enumerate}
+\item Kaiser: \(\lambda_k>1\).
+On the scale of \(S\) this is ``above the mean eigenvalue,'' not a significance test.
+\item Marchenko--Pastur at \(\sigma^2=1\): \(\lambda_k>\lambda_+\) from \eqref{eq:mp}.
+\item Cumulative variance: the smallest \(k\) such that \(\sum_{i=1}^{k}\lambda_i\big/\sum_{i=1}^{p}\lambda_i\) reaches \(0.80\), \(0.90\), or \(0.95\).
+\item An iterated bulk mean, defined next.
+It is reported and is not a cutoff, because it does not converge on either fitted spectrum.
+\end{enumerate}
+
+The iteration starts at \(\sigma^2_{(0)}=1\).
+At step \(m\) it forms the upper edge in \eqref{eq:mp} from \(\sigma^2_{(m-1)}\), averages the eigenvalues at or below that edge, and replaces \(\sigma^2\).
+It stops when successive values differ by at most \(10^{-8}\), when the bulk is empty, when the bulk mean is at most \(10^{-8}\), or after \(50\) iterations.
+On these spectra the bulk mean collapses toward zero: many correlation eigenvalues sit at numerical zero because the columns are collinear.
+The implementation returns a null component count in that case rather than clipping the estimate to a positive constant.
+
+\subsection{Why the classical law does not apply to these indicators}
+\label{sec:mp-limits}
+
+Equation \eqref{eq:mp} is a statement about a Wishart-type matrix.
+The indicator matrix violates the hypotheses in several ways that the diagnostic does not correct.
+
+The rows are not independent.
+Moving averages, oscillators, and ranges at date \(t\) reuse prices from a window ending at \(t\), so successive rows share most of their inputs.
+The nominal \(n_{\mathrm{tr}}=4{,}044\) overstates the number of independent covariance observations, and a dependent sample typically spreads the empirical spectrum beyond the i.i.d.\ edge.
+An eigenvalue above \(1.531269\) is therefore not identified as a population factor.
+
+The columns are not idiosyncratic noise around a low-rank factor model.
+Many are smooth functions of the same adjusted close.
+Their large leading eigenvalues measure that constructed collinearity.
+Price-relative transformation reduces the common price level and leaves the collinearity of the moving-average family, which is why \(\lambda_1\) barely changes.
+
+Variances are not constant across 2002--2018, and the same matrix is used to estimate the \(p\) means and \(p\) standard deviations that define \(Z_{\mathrm{tr}}\).
+The implemented edge is the covariance edge at \(\sigma^2=1\).
+It is not the correction appropriate to a sample correlation matrix whose means and variances were estimated in-sample.
+No effective-sample-size adjustment, tapering, or random-matrix shrinkage is applied.
+
+The iterated estimator is additionally unstable when the spectrum has a point mass near zero.
+Excluding eigenvalues above the current edge lowers the estimated noise variance, which lowers the edge, until the average is dominated by those near-zero eigenvalues.
+That path is a numerical diagnostic of the spectrum, not an estimate of \(\sigma^2\).
+
+\section{Training and test separation}
+\label{sec:split}
+
+The cutoff \(T=\) 31~December~2018 is inclusive and was fixed before either fit as a first frozen split.
+It was not chosen by test-period profitability, and no profitability threshold is defined.
+The training sample is the \(4{,}044\) rows from 4~December~2002 through 31~December~2018.
+The test sample is the \(1{,}981\) rows from 2~January~2019 through 17~November~2026.
+The two blocks are disjoint.
+Calendar gaps in the feature index were audited; gaps of five days or less, which cover ordinary weekends, are not treated as missing sessions.
+
+A later run loads the saved scaler and loadings.
+If the live column set differs, or the training-row count or training column means differ, the run raises and does not write a new fit over the existing directory.
+Stage~2 has its own directory and does not write \path{models/stage1_train2018_v1/}.
+Reports and plots are written only when the corresponding diagnostic file is absent, so those artifacts stay with the fit that produced them.
+The stage-1 diagnostic Markdown was not regenerated after the reader switched from the snapshot path to the research CSV; its first sample bullet still names the snapshot.
+The feature hash of that fit is the hash in Section~\ref{sec:data}.
+
+One cutoff cannot represent a change of dependence inside 2002--2018 or after 2018.
+No walk-forward refit is implemented.
+A later walk-forward would require a new model directory for each cutoff.
+
+\section{Diagnostic numerical summary}
+\label{sec:numbers}
+
+Full tables, scree plots, and column-shift lists are in \path{reports/stage1_diagnostics_v1.md} and \path{reports/stage2_diagnostics_v1.md}, with the eigenvalue and retention CSV files beside them.
+The comparison below uses the same split and the same feature hash.
+The stage-1 column is the raw matrix.
+The stage-2 column is the matrix after \eqref{eq:ratios}.
+No row is a selected model.
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+ & Stage 1 & Stage 2 \\
+\midrule
+Largest eigenvalue \(\lambda_1\) & 62.03 & 61.14 \\
+Participation ratio \eqref{eq:pr} & 7.87 & 9.60 \\
+PC1 test mean & 39.02 & \(-0.38\) \\
+PC1 training standard deviation & 7.88 & 7.82 \\
+Largest \(|\)column mean \(z|\) & 9.24 & 0.75 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Stage-1 retention counts, none selected, are \(12\), \(19\), \(24\), \(25\), and \(40\) components for cumulative variance \(80\%\), the unit-noise Marchenko--Pastur edge, cumulative variance \(90\%\), Kaiser, and cumulative variance \(95\%\).
+The corresponding stage-2 counts are \(17\), \(23\), \(31\), \(30\), and \(49\).
+In stage~1 the unit-noise edge retains variance share \(0.8742\); in stage~2 it retains \(0.8585\).
+The iterated noise estimate converges in neither fit.
+
+\section{Assumptions and limitations}
+
+A stored feature dated \(t\) is treated as known at the close of \(t\).
+The experiment does not rebuild the research indicators except for the stage-2 consistency check, so that check does not prove that every upstream indicator is causal.
+The stage-2 divisor is the adjusted close of date \(t\), with the look-ahead distinction in Section~\ref{sec:transform}.
+
+The \(1/n\) and \(1/(n-1)\) conventions answer different questions.
+Equation \eqref{eq:sn} is the matrix whose mean eigenvalue is one and whose bulk edge is \eqref{eq:mp}.
+Equation \eqref{eq:sklearn} is the variance scikit-learn attaches to a principal-component score.
+They differ by the factor in \eqref{eq:convert}; only the former enters the random-matrix diagnostic.
+
+Classical Marchenko--Pastur reasoning does not validate the components above \(\lambda_+\), for the dependence, collinearity, heteroskedasticity, and in-sample standardization reasons in Section~\ref{sec:mp-limits}.
+The price-relative map removes a unit.
+It does not produce a stationary series, does not orthogonalize the moving-average family, and does not remove volatility shifts.
+Overlapping multi-day returns are not computed, so no adjustment for overlapping observations is implemented.
+Test-period return is not a fitting or selection criterion.
+
+\section{Methods not implemented}
+
+The following are the unfinished Stage~2 score-matrix export, together with all of Stages~3--7 in Section~\ref{sec:roadmap}.
+Roadmap Stage~1 is approved.
+Its standardized matrix and portable preprocessor are the v2 artifact in that section.
+Nothing in this list is a saved clustering model, a selected dimension, or a completed trading result.
+
+\begin{itemize}
+\item A chosen principal-component dimension, including any automatic use of Marchenko--Pastur outliers.
+\item Whitening before a distance calculation.
+\item \(K\)-means or any other clustering, and any search over \(K\).
+\item A Markov transition matrix, and five-day or ten-day regime probabilities.
+\item Conditional QQQ returns, a buy-and-hold comparison, transaction costs, and a trading threshold.
+\item Paper-trading logs, orders, or a daily decision rule.
+\item Walk-forward refits.
+\end{itemize}
+
+Clustering and trading require an approval separate from this methods note.
+Writing or compiling this document does not supply that approval.
+
+\end{document}

@@ -1,0 +1,209 @@
+{
+  "stage": 2,
+  "model_version": "stage2_price_relative_train2018_v1",
+  "train_end": "2018-12-31",
+  "feature_source": "data/asset_indicator_matrix.csv",
+  "feature_sha256": "4ecefa23bb0321deea57d55a05bc45cba11424ba852554ae40b1e3666ed457ad",
+  "adjusted_ohlc_sha256": "7e9317cbc535e850cdb34c4aae87cb7f8a826b9ea948b415d8ab29e62c309a6c",
+  "raw_ohlc_sha256": "f486dfa34996f0b1e18a7df5307f4c87cab7f0155cd9cbcd8e9fb5820bd35d8f",
+  "n_obs": 4044,
+  "n_features": 228,
+  "scaler_n_samples_seen": 4044,
+  "formulas": [
+    {
+      "indicator": "ADX",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Aroon Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Average True Range",
+      "family": "width",
+      "formula": "V / C"
+    },
+    {
+      "indicator": "Bollinger Bands_upperband",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Bollinger Bands_middleband",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Bollinger Bands_lowerband",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Chande Momentum Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Commodity Channel Index",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Directional Movement",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Kaufman Adaptive Moving Average",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Linear Regression",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Linear Regression Indicator",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "MACD Histogram",
+      "family": "width",
+      "formula": "V / C"
+    },
+    {
+      "indicator": "MACD Indicator",
+      "family": "width",
+      "formula": "V / C"
+    },
+    {
+      "indicator": "MACD Percentage",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Median Price",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Momentum Indicator",
+      "family": "width",
+      "formula": "V / C"
+    },
+    {
+      "indicator": "Moving Average",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Parabolic SAR",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Price Differential",
+      "family": "width",
+      "formula": "V / C"
+    },
+    {
+      "indicator": "Price Ratio",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Rate of Change (Price)",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Relative Strength Index (RSI)",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Standard Deviation Channels",
+      "family": "width",
+      "formula": "V / C"
+    },
+    {
+      "indicator": "Stochastic Oscillator_slowk",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Stochastic Oscillator_slowd",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Stochastic RSI_fastk",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Stochastic RSI_fastd",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "The Moving Average Oscillator",
+      "family": "width",
+      "formula": "V / C"
+    },
+    {
+      "indicator": "Triple Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "TRIX Indicator",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "True Range",
+      "family": "width",
+      "formula": "V / C"
+    },
+    {
+      "indicator": "Typical Price",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Ultimate Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged"
+    },
+    {
+      "indicator": "Weighted Close",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Weighted Moving Average",
+      "family": "level",
+      "formula": "L / C - 1"
+    },
+    {
+      "indicator": "Williams %R",
+      "family": "scale_free",
+      "formula": "unchanged"
+    }
+  ],
+  "price_convention": "Ticker.history(period=max, interval=1d) with yfinance default auto_adjust=True",
+  "retention_rule_selected": null,
+  "regime_count_selected": null,
+  "created_at_utc": "2026-11-17T21:17:22Z",
+  "note": "Transformed PCA only. Stage 1 model was not modified. No clustering or trading rule."
+}

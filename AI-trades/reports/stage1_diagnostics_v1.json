@@ -1,0 +1,299 @@
+{
+  "snapshot_file": "feature_matrix_v1.csv",
+  "snapshot_sha256": "4ecefa23bb0321deea57d55a05bc45cba11424ba852554ae40b1e3666ed457ad",
+  "qqq_file": "qqq_ohlc_v1.csv",
+  "qqq_sha256": "963c176144439ec6a6bc31b76c4b045799685d6da9f05ded0c0f3393bd63adbe",
+  "model_version": "stage1_train2018_v1",
+  "alignment": {
+    "feature_start": "2002-12-04",
+    "feature_end": "2026-11-17",
+    "n_feature_rows": 6025,
+    "n_feature_columns": 228,
+    "price_start": "1999-03-10",
+    "price_end": "2026-11-17",
+    "n_price_rows": 6967,
+    "n_intersection": 6025,
+    "n_feature_dates_missing_qqq": 0,
+    "feature_dates_missing_qqq_head": [],
+    "n_qqq_dates_outside_features": 942,
+    "feature_duplicate_dates": 0,
+    "price_duplicate_dates": 0,
+    "feature_monotonic": 1,
+    "price_monotonic": 1,
+    "feature_timestamps_not_midnight": 0,
+    "feature_gaps_longer_than_5_days": [],
+    "max_abs_close_vs_adjusted_on_feature_dates": 11.8958740234375,
+    "qqq_columns": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "adj_close",
+      "volume",
+      "dividends",
+      "stock_splits",
+      "capital_gains",
+      "open_adjusted",
+      "high_adjusted",
+      "low_adjusted",
+      "close_adjusted"
+    ]
+  },
+  "features": {
+    "assets": [
+      "SPY",
+      "QQQ",
+      "IWM",
+      "TLT",
+      "^VIX",
+      "DX-Y.NYB"
+    ],
+    "n_indicators_per_asset": {
+      "SPY": 38,
+      "QQQ": 38,
+      "IWM": 38,
+      "TLT": 38,
+      "^VIX": 38,
+      "DX-Y.NYB": 38
+    },
+    "indicators": [
+      "ADX",
+      "Aroon Oscillator",
+      "Average True Range",
+      "Bollinger Bands_upperband",
+      "Bollinger Bands_middleband",
+      "Bollinger Bands_lowerband",
+      "Chande Momentum Oscillator",
+      "Commodity Channel Index",
+      "Directional Movement",
+      "Exponential Moving Average",
+      "Kaufman Adaptive Moving Average",
+      "Linear Regression",
+      "Linear Regression Indicator",
+      "MACD Histogram",
+      "MACD Indicator",
+      "MACD Percentage",
+      "Median Price",
+      "Momentum Indicator",
+      "Moving Average",
+      "Parabolic SAR",
+      "Price Differential",
+      "Price Ratio",
+      "Rate of Change (Price)",
+      "Relative Strength Index (RSI)",
+      "Standard Deviation Channels",
+      "Stochastic Oscillator_slowk",
+      "Stochastic Oscillator_slowd",
+      "Stochastic RSI_fastk",
+      "Stochastic RSI_fastd",
+      "The Moving Average Oscillator",
+      "Triple Exponential Moving Average",
+      "TRIX Indicator",
+      "True Range",
+      "Typical Price",
+      "Ultimate Oscillator",
+      "Weighted Close",
+      "Weighted Moving Average",
+      "Williams %R"
+    ],
+    "indicators_identical_across_assets": 1,
+    "missing_values": 0,
+    "infinite_values": 0,
+    "n_train": 4044,
+    "n_test": 1981,
+    "train_start": "2002-12-04",
+    "train_end": "2018-12-31",
+    "test_start": "2019-01-02",
+    "test_end": "2026-11-17",
+    "zero_variance_train_columns": [],
+    "exact_duplicate_train_column_groups": []
+  },
+  "dropped_zero_variance_columns": [],
+  "n_features": 228,
+  "gamma": 0.05637982195845697,
+  "mp_edge_sigma2_1": [
+    0.5814911109599453,
+    1.5312685329569686
+  ],
+  "iterated_noise": {
+    "sigma2": null,
+    "converged": 0,
+    "reason": "bulk mean collapsed toward zero because many eigenvalues are near zero"
+  },
+  "largest_eigenvalue": 62.0314155450658,
+  "participation_ratio": 7.867121979536945,
+  "consistency": {
+    "max_abs_difference": 9.237055564881302e-14,
+    "within_tolerance": 1,
+    "tolerance": 1e-06,
+    "explained_variance_ratio_sum": 1.0
+  },
+  "retention": [
+    {
+      "rule": "kaiser_eigenvalue_gt_1",
+      "n_components": 25,
+      "variance_share": 0.9070649614178317,
+      "smallest_kept_eigenvalue": 1.0795571400741228,
+      "definition": "correlation eigenvalue above 1"
+    },
+    {
+      "rule": "mp_sigma2_1",
+      "n_components": 19,
+      "variance_share": 0.8742159220533079,
+      "smallest_kept_eigenvalue": 1.671152475385792,
+      "definition": "above (1+sqrt(gamma))^2 = 1.531269 with sigma^2 = 1"
+    },
+    {
+      "rule": "mp_iterated_sigma2",
+      "n_components": null,
+      "variance_share": null,
+      "smallest_kept_eigenvalue": null,
+      "definition": "not used: bulk mean collapsed toward zero because many eigenvalues are near zero"
+    },
+    {
+      "rule": "cumulative_variance_80",
+      "n_components": 12,
+      "variance_share": 0.8099655913379697,
+      "smallest_kept_eigenvalue": 3.148822320550926,
+      "definition": "smallest leading count whose eigenvalue share reaches 80%"
+    },
+    {
+      "rule": "cumulative_variance_90",
+      "n_components": 24,
+      "variance_share": 0.9023300616806644,
+      "smallest_kept_eigenvalue": 1.1057467010911721,
+      "definition": "smallest leading count whose eigenvalue share reaches 90%"
+    },
+    {
+      "rule": "cumulative_variance_95",
+      "n_components": 40,
+      "variance_share": 0.9518889485023678,
+      "smallest_kept_eigenvalue": 0.45298763317712964,
+      "definition": "smallest leading count whose eigenvalue share reaches 95%"
+    },
+    {
+      "rule": "all_components_diagnostic_only",
+      "n_components": 228,
+      "variance_share": 1.0,
+      "smallest_kept_eigenvalue": 0.0,
+      "definition": "full training basis; not a retention choice"
+    }
+  ],
+  "retention_rule_selected": null,
+  "score_shift": [
+    {
+      "component": 1,
+      "train_mean": 0.0,
+      "train_std": 7.876002510478642,
+      "test_mean": 39.01799918379168,
+      "test_std": 14.600258650461079
+    },
+    {
+      "component": 2,
+      "train_mean": 5.622494447162019e-17,
+      "train_std": 6.510233943853958,
+      "test_mean": -7.928616788344533,
+      "test_std": 11.563871888158424
+    },
+    {
+      "component": 3,
+      "train_mean": 0.0,
+      "train_std": 4.532213393015117,
+      "test_mean": 5.582232989146855,
+      "test_std": 6.034564570952859
+    },
+    {
+      "component": 4,
+      "train_mean": -5.622494447162019e-17,
+      "train_std": 3.4187382861091695,
+      "test_mean": 0.4118913612420274,
+      "test_std": 3.3191174225729587
+    },
+    {
+      "component": 5,
+      "train_mean": -4.2168708353715146e-17,
+      "train_std": 3.2695400709189717,
+      "test_mean": -3.5806497720742785,
+      "test_std": 3.994359306959307
+    }
+  ],
+  "column_shift": [
+    {
+      "column": "QQQ|Average True Range",
+      "test_mean_z": 9.244762887362269,
+      "test_std_z": 5.051515410897333
+    },
+    {
+      "column": "QQQ|Bollinger Bands_upperband",
+      "test_mean_z": 8.002012810208319,
+      "test_std_z": 3.916908629207395
+    },
+    {
+      "column": "QQQ|Weighted Close",
+      "test_mean_z": 7.950105542316103,
+      "test_std_z": 3.904429530055877
+    },
+    {
+      "column": "QQQ|Typical Price",
+      "test_mean_z": 7.949976198382529,
+      "test_std_z": 3.904536143552905
+    },
+    {
+      "column": "QQQ|Median Price",
+      "test_mean_z": 7.949648401611003,
+      "test_std_z": 3.9047929078267183
+    },
+    {
+      "column": "QQQ|Linear Regression Indicator",
+      "test_mean_z": 7.949286385437847,
+      "test_std_z": 3.907458059859147
+    },
+    {
+      "column": "QQQ|Triple Exponential Moving Average",
+      "test_mean_z": 7.9484298714000525,
+      "test_std_z": 3.9124493279908013
+    },
+    {
+      "column": "QQQ|Linear Regression",
+      "test_mean_z": 7.948246856808562,
+      "test_std_z": 3.906064552249215
+    },
+    {
+      "column": "QQQ|Bollinger Bands_middleband",
+      "test_mean_z": 7.946433556948088,
+      "test_std_z": 3.903899526019484
+    },
+    {
+      "column": "QQQ|Kaufman Adaptive Moving Average",
+      "test_mean_z": 7.937741216210177,
+      "test_std_z": 3.8999225049793504
+    },
+    {
+      "column": "QQQ|Weighted Moving Average",
+      "test_mean_z": 7.93098497038994,
+      "test_std_z": 3.89917183168673
+    },
+    {
+      "column": "QQQ|Exponential Moving Average",
+      "test_mean_z": 7.926347719036264,
+      "test_std_z": 3.8901711156108862
+    },
+    {
+      "column": "QQQ|Moving Average",
+      "test_mean_z": 7.921425492380607,
+      "test_std_z": 3.896096500804928
+    },
+    {
+      "column": "QQQ|Parabolic SAR",
+      "test_mean_z": 7.917552864123859,
+      "test_std_z": 3.9155177075065297
+    },
+    {
+      "column": "QQQ|Bollinger Bands_lowerband",
+      "test_mean_z": 7.885736191573792,
+      "test_std_z": 3.892970533206751
+    }
+  ],
+  "report_dir": "/Users/raynorananta/Documents/projects/voltes/AI-trades/reports",
+  "model_dir": "/Users/raynorananta/Documents/projects/voltes/AI-trades/models/stage1_train2018_v1"
+}

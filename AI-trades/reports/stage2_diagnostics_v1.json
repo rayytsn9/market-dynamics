@@ -1,0 +1,315 @@
+{
+  "model_version": "stage2_price_relative_train2018_v1",
+  "feature_sha256": "4ecefa23bb0321deea57d55a05bc45cba11424ba852554ae40b1e3666ed457ad",
+  "adjusted_sha256": "7e9317cbc535e850cdb34c4aae87cb7f8a826b9ea948b415d8ab29e62c309a6c",
+  "n_level_columns": 84,
+  "n_width_columns": 48,
+  "n_scale_free_columns": 96,
+  "min_reconstruction_correlation": 0.9992080412943384,
+  "baseline": {
+    "n_features": 228,
+    "gamma": 0.05637982195845697,
+    "largest_eigenvalue": 62.0314155450658,
+    "participation_ratio": 7.867121979536945,
+    "mp_edge_sigma2_1": [
+      0.5814911109599453,
+      1.5312685329569686
+    ],
+    "iterated_noise": {
+      "sigma2": null,
+      "converged": 0,
+      "reason": "bulk mean collapsed toward zero because many eigenvalues are near zero"
+    },
+    "retention": [
+      {
+        "rule": "kaiser_eigenvalue_gt_1",
+        "n_components": 25,
+        "variance_share": 0.9070649614178317,
+        "smallest_kept_eigenvalue": 1.0795571400741228,
+        "definition": "correlation eigenvalue above 1"
+      },
+      {
+        "rule": "mp_sigma2_1",
+        "n_components": 19,
+        "variance_share": 0.8742159220533079,
+        "smallest_kept_eigenvalue": 1.671152475385792,
+        "definition": "above (1+sqrt(gamma))^2 = 1.531269 with sigma^2 = 1"
+      },
+      {
+        "rule": "mp_iterated_sigma2",
+        "n_components": null,
+        "variance_share": null,
+        "smallest_kept_eigenvalue": null,
+        "definition": "not used: bulk mean collapsed toward zero because many eigenvalues are near zero"
+      },
+      {
+        "rule": "cumulative_variance_80",
+        "n_components": 12,
+        "variance_share": 0.8099655913379697,
+        "smallest_kept_eigenvalue": 3.148822320550926,
+        "definition": "smallest leading count whose eigenvalue share reaches 80%"
+      },
+      {
+        "rule": "cumulative_variance_90",
+        "n_components": 24,
+        "variance_share": 0.9023300616806644,
+        "smallest_kept_eigenvalue": 1.1057467010911721,
+        "definition": "smallest leading count whose eigenvalue share reaches 90%"
+      },
+      {
+        "rule": "cumulative_variance_95",
+        "n_components": 40,
+        "variance_share": 0.9518889485023678,
+        "smallest_kept_eigenvalue": 0.45298763317712964,
+        "definition": "smallest leading count whose eigenvalue share reaches 95%"
+      },
+      {
+        "rule": "all_components_diagnostic_only",
+        "n_components": 228,
+        "variance_share": 1.0,
+        "smallest_kept_eigenvalue": 0.0,
+        "definition": "full training basis; not a retention choice"
+      }
+    ],
+    "consistency": {
+      "max_abs_difference": 9.237055564881302e-14,
+      "within_tolerance": 1,
+      "tolerance": 1e-06,
+      "explained_variance_ratio_sum": 1.0
+    },
+    "score_shift": [
+      {
+        "component": 1,
+        "train_mean": 0.0,
+        "train_std": 7.876002510478642,
+        "test_mean": 39.01799918379168,
+        "test_std": 14.600258650461079
+      },
+      {
+        "component": 2,
+        "train_mean": 5.622494447162019e-17,
+        "train_std": 6.510233943853958,
+        "test_mean": -7.928616788344533,
+        "test_std": 11.563871888158424
+      },
+      {
+        "component": 3,
+        "train_mean": 0.0,
+        "train_std": 4.532213393015117,
+        "test_mean": 5.582232989146855,
+        "test_std": 6.034564570952859
+      },
+      {
+        "component": 4,
+        "train_mean": -5.622494447162019e-17,
+        "train_std": 3.4187382861091695,
+        "test_mean": 0.4118913612420274,
+        "test_std": 3.3191174225729587
+      },
+      {
+        "component": 5,
+        "train_mean": -4.2168708353715146e-17,
+        "train_std": 3.2695400709189717,
+        "test_mean": -3.5806497720742785,
+        "test_std": 3.994359306959307
+      }
+    ],
+    "max_abs_pc_test_mean": 39.01799918379168,
+    "pc1_test_mean": 39.01799918379168,
+    "pc1_train_std": 7.876002510478642
+  },
+  "transformed": {
+    "n_features": 228,
+    "gamma": 0.05637982195845697,
+    "largest_eigenvalue": 61.13830850401358,
+    "participation_ratio": 9.595628740578599,
+    "mp_edge_sigma2_1": [
+      0.5814911109599453,
+      1.5312685329569686
+    ],
+    "iterated_noise": {
+      "sigma2": null,
+      "converged": 0,
+      "reason": "bulk mean collapsed toward zero because many eigenvalues are near zero"
+    },
+    "retention": [
+      {
+        "rule": "kaiser_eigenvalue_gt_1",
+        "n_components": 30,
+        "variance_share": 0.8967745339954966,
+        "smallest_kept_eigenvalue": 1.0198360642271487,
+        "definition": "correlation eigenvalue above 1"
+      },
+      {
+        "rule": "mp_sigma2_1",
+        "n_components": 23,
+        "variance_share": 0.8584925906345731,
+        "smallest_kept_eigenvalue": 1.5384825991454396,
+        "definition": "above (1+sqrt(gamma))^2 = 1.531269 with sigma^2 = 1"
+      },
+      {
+        "rule": "mp_iterated_sigma2",
+        "n_components": null,
+        "variance_share": null,
+        "smallest_kept_eigenvalue": null,
+        "definition": "not used: bulk mean collapsed toward zero because many eigenvalues are near zero"
+      },
+      {
+        "rule": "cumulative_variance_80",
+        "n_components": 17,
+        "variance_share": 0.810343429107704,
+        "smallest_kept_eigenvalue": 2.3903053776356016,
+        "definition": "smallest leading count whose eigenvalue share reaches 80%"
+      },
+      {
+        "rule": "cumulative_variance_90",
+        "n_components": 31,
+        "variance_share": 0.9010150901314194,
+        "smallest_kept_eigenvalue": 0.9668467989904241,
+        "definition": "smallest leading count whose eigenvalue share reaches 90%"
+      },
+      {
+        "rule": "cumulative_variance_95",
+        "n_components": 49,
+        "variance_share": 0.9504672250675087,
+        "smallest_kept_eigenvalue": 0.4152681536933611,
+        "definition": "smallest leading count whose eigenvalue share reaches 95%"
+      },
+      {
+        "rule": "all_components_diagnostic_only",
+        "n_components": 228,
+        "variance_share": 1.0,
+        "smallest_kept_eigenvalue": 0.0,
+        "definition": "full training basis; not a retention choice"
+      }
+    ],
+    "consistency": {
+      "max_abs_difference": 1.7763568394002505e-14,
+      "within_tolerance": 1,
+      "tolerance": 1e-06,
+      "explained_variance_ratio_sum": 1.0
+    },
+    "score_shift": [
+      {
+        "component": 1,
+        "train_mean": 5.622494447162019e-17,
+        "train_std": 7.819098957297669,
+        "test_mean": -0.3843940041401422,
+        "test_std": 8.084733054552506
+      },
+      {
+        "component": 2,
+        "train_mean": 0.0,
+        "train_std": 5.141155435151926,
+        "test_mean": -0.2794931224287753,
+        "test_std": 5.274092766469225
+      },
+      {
+        "component": 3,
+        "train_mean": 0.0,
+        "train_std": 4.156851586365881,
+        "test_mean": -0.5708505554331631,
+        "test_std": 4.349770488637337
+      },
+      {
+        "component": 4,
+        "train_mean": -8.433741670743029e-17,
+        "train_std": 3.687739226577839,
+        "test_mean": 0.29102451316105665,
+        "test_std": 3.820582843390531
+      },
+      {
+        "component": 5,
+        "train_mean": 0.0,
+        "train_std": 3.6370334389144263,
+        "test_mean": 0.16195279221776893,
+        "test_std": 3.5086802073470706
+      }
+    ],
+    "max_abs_pc_test_mean": 0.5708505554331631,
+    "pc1_test_mean": -0.3843940041401422,
+    "pc1_train_std": 7.819098957297669
+  },
+  "baseline_max_abs_mean_z": 9.244762887362265,
+  "transformed_max_abs_mean_z": 0.745807319983493,
+  "column_shift": [
+    {
+      "column": "DX-Y.NYB|Average True Range",
+      "test_mean_z": -0.7458073199834934,
+      "test_std_z": 0.7758868827204314
+    },
+    {
+      "column": "^VIX|Average True Range",
+      "test_mean_z": 0.6965071217430246,
+      "test_std_z": 1.131939057726696
+    },
+    {
+      "column": "^VIX|ADX",
+      "test_mean_z": 0.5114127377581128,
+      "test_std_z": 1.1626478219707486
+    },
+    {
+      "column": "^VIX|Ultimate Oscillator",
+      "test_mean_z": -0.5037338216147237,
+      "test_std_z": 1.0016028510009845
+    },
+    {
+      "column": "TLT|Average True Range",
+      "test_mean_z": 0.4721969245574592,
+      "test_std_z": 1.3287895069691598
+    },
+    {
+      "column": "DX-Y.NYB|Price Differential",
+      "test_mean_z": -0.45952092935654787,
+      "test_std_z": 0.7831169285610292
+    },
+    {
+      "column": "DX-Y.NYB|Price Ratio",
+      "test_mean_z": -0.45829906192296693,
+      "test_std_z": 0.7810021238644421
+    },
+    {
+      "column": "DX-Y.NYB|True Range",
+      "test_mean_z": -0.45278746939929565,
+      "test_std_z": 0.7895410654178163
+    },
+    {
+      "column": "^VIX|Price Differential",
+      "test_mean_z": 0.38611914922614776,
+      "test_std_z": 1.2815746582128082
+    },
+    {
+      "column": "^VIX|Price Ratio",
+      "test_mean_z": 0.35245927577607483,
+      "test_std_z": 1.3482211713556536
+    },
+    {
+      "column": "^VIX|True Range",
+      "test_mean_z": 0.33396984771919513,
+      "test_std_z": 1.2566505726437804
+    },
+    {
+      "column": "TLT|TRIX Indicator",
+      "test_mean_z": -0.32318367419954236,
+      "test_std_z": 1.1905845205046626
+    },
+    {
+      "column": "DX-Y.NYB|Standard Deviation Channels",
+      "test_mean_z": -0.3148337853704775,
+      "test_std_z": 0.8808766645587269
+    },
+    {
+      "column": "TLT|Kaufman Adaptive Moving Average",
+      "test_mean_z": 0.3007273202804067,
+      "test_std_z": 1.158533765775557
+    },
+    {
+      "column": "^VIX|Directional Movement",
+      "test_mean_z": 0.27772372301118575,
+      "test_std_z": 1.1178354416535121
+    }
+  ],
+  "retention_rule_selected": null,
+  "model_dir": "/Users/raynorananta/Documents/projects/voltes/AI-trades/models/stage2_price_relative_train2018_v1",
+  "report_dir": "/Users/raynorananta/Documents/projects/voltes/AI-trades/reports"
+}

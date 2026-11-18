@@ -1,0 +1,1864 @@
+{
+  "roadmap_stage": 1,
+  "artifact_version": "stage1_price_relative_standardized_v2",
+  "predecessor": "stage1_price_relative_standardized_v1",
+  "status": "exported_pending_project_owner_approval",
+  "stage_complete": false,
+  "created_at_utc": "2026-11-17T22:10:39Z",
+  "class_module": "ai_trades.preprocessing",
+  "class_name": "FrozenPriceRelativePreprocessor",
+  "serialization_note": "v1 stored the class as __main__.FrozenPriceRelativePreprocessor. v2 stores ai_trades.preprocessing.FrozenPriceRelativePreprocessor. The scaler was copied, not refit. Full-sample standardization was not performed.",
+  "feature_source": "data/asset_indicator_matrix.csv",
+  "feature_sha256": "4ecefa23bb0321deea57d55a05bc45cba11424ba852554ae40b1e3666ed457ad",
+  "adjusted_ohlc_sha256": "7e9317cbc535e850cdb34c4aae87cb7f8a826b9ea948b415d8ab29e62c309a6c",
+  "raw_ohlc_sha256": "f486dfa34996f0b1e18a7df5307f4c87cab7f0155cd9cbcd8e9fb5820bd35d8f",
+  "frozen_model_version": "stage2_price_relative_train2018_v1",
+  "frozen_scaler_sha256": "1a4afa857672bfaa2db44c7360d2d749a4a5649e6aa0df25a87c4f044e5decb4",
+  "train_end": "2018-12-31",
+  "n_rows": 6025,
+  "n_columns": 228,
+  "n_train_rows": 4044,
+  "n_test_rows": 1981,
+  "scaler_n_samples_seen": 4044,
+  "standardization": "Each column was centered and scaled with the mean and population standard deviation of rows on or before 2018-12-31. Later rows were transformed with those frozen values. Full-sample standardization was not performed.",
+  "price_convention": "Ticker.history(period=max, interval=1d) with yfinance default auto_adjust=True",
+  "adjusted_close_requirement": "Level columns use L/C - 1 and width columns use V/C, where C is the same asset's adjusted close on the same date. Scale-free columns ignore the close.",
+  "serialization": {
+    "path": "feature_matrix_standardized.csv",
+    "header_rows": [
+      "asset",
+      "indicator"
+    ],
+    "index_column": "date",
+    "read": "pandas.read_csv(path, header=[0, 1], index_col=0, parse_dates=True)"
+  },
+  "columns": [
+    {
+      "position": 0,
+      "asset": "SPY",
+      "indicator": "ADX",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 1,
+      "asset": "SPY",
+      "indicator": "Aroon Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 2,
+      "asset": "SPY",
+      "indicator": "Average True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 3,
+      "asset": "SPY",
+      "indicator": "Bollinger Bands_upperband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 4,
+      "asset": "SPY",
+      "indicator": "Bollinger Bands_middleband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 5,
+      "asset": "SPY",
+      "indicator": "Bollinger Bands_lowerband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 6,
+      "asset": "SPY",
+      "indicator": "Chande Momentum Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 7,
+      "asset": "SPY",
+      "indicator": "Commodity Channel Index",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 8,
+      "asset": "SPY",
+      "indicator": "Directional Movement",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 9,
+      "asset": "SPY",
+      "indicator": "Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 10,
+      "asset": "SPY",
+      "indicator": "Kaufman Adaptive Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 11,
+      "asset": "SPY",
+      "indicator": "Linear Regression",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 12,
+      "asset": "SPY",
+      "indicator": "Linear Regression Indicator",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 13,
+      "asset": "SPY",
+      "indicator": "MACD Histogram",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 14,
+      "asset": "SPY",
+      "indicator": "MACD Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 15,
+      "asset": "SPY",
+      "indicator": "MACD Percentage",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 16,
+      "asset": "SPY",
+      "indicator": "Median Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 17,
+      "asset": "SPY",
+      "indicator": "Momentum Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 18,
+      "asset": "SPY",
+      "indicator": "Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 19,
+      "asset": "SPY",
+      "indicator": "Parabolic SAR",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 20,
+      "asset": "SPY",
+      "indicator": "Price Differential",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 21,
+      "asset": "SPY",
+      "indicator": "Price Ratio",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 22,
+      "asset": "SPY",
+      "indicator": "Rate of Change (Price)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 23,
+      "asset": "SPY",
+      "indicator": "Relative Strength Index (RSI)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 24,
+      "asset": "SPY",
+      "indicator": "Standard Deviation Channels",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 25,
+      "asset": "SPY",
+      "indicator": "Stochastic Oscillator_slowk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 26,
+      "asset": "SPY",
+      "indicator": "Stochastic Oscillator_slowd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 27,
+      "asset": "SPY",
+      "indicator": "Stochastic RSI_fastk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 28,
+      "asset": "SPY",
+      "indicator": "Stochastic RSI_fastd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 29,
+      "asset": "SPY",
+      "indicator": "The Moving Average Oscillator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 30,
+      "asset": "SPY",
+      "indicator": "Triple Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 31,
+      "asset": "SPY",
+      "indicator": "TRIX Indicator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 32,
+      "asset": "SPY",
+      "indicator": "True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 33,
+      "asset": "SPY",
+      "indicator": "Typical Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 34,
+      "asset": "SPY",
+      "indicator": "Ultimate Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 35,
+      "asset": "SPY",
+      "indicator": "Weighted Close",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 36,
+      "asset": "SPY",
+      "indicator": "Weighted Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 37,
+      "asset": "SPY",
+      "indicator": "Williams %R",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 38,
+      "asset": "QQQ",
+      "indicator": "ADX",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 39,
+      "asset": "QQQ",
+      "indicator": "Aroon Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 40,
+      "asset": "QQQ",
+      "indicator": "Average True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 41,
+      "asset": "QQQ",
+      "indicator": "Bollinger Bands_upperband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 42,
+      "asset": "QQQ",
+      "indicator": "Bollinger Bands_middleband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 43,
+      "asset": "QQQ",
+      "indicator": "Bollinger Bands_lowerband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 44,
+      "asset": "QQQ",
+      "indicator": "Chande Momentum Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 45,
+      "asset": "QQQ",
+      "indicator": "Commodity Channel Index",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 46,
+      "asset": "QQQ",
+      "indicator": "Directional Movement",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 47,
+      "asset": "QQQ",
+      "indicator": "Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 48,
+      "asset": "QQQ",
+      "indicator": "Kaufman Adaptive Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 49,
+      "asset": "QQQ",
+      "indicator": "Linear Regression",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 50,
+      "asset": "QQQ",
+      "indicator": "Linear Regression Indicator",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 51,
+      "asset": "QQQ",
+      "indicator": "MACD Histogram",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 52,
+      "asset": "QQQ",
+      "indicator": "MACD Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 53,
+      "asset": "QQQ",
+      "indicator": "MACD Percentage",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 54,
+      "asset": "QQQ",
+      "indicator": "Median Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 55,
+      "asset": "QQQ",
+      "indicator": "Momentum Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 56,
+      "asset": "QQQ",
+      "indicator": "Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 57,
+      "asset": "QQQ",
+      "indicator": "Parabolic SAR",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 58,
+      "asset": "QQQ",
+      "indicator": "Price Differential",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 59,
+      "asset": "QQQ",
+      "indicator": "Price Ratio",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 60,
+      "asset": "QQQ",
+      "indicator": "Rate of Change (Price)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 61,
+      "asset": "QQQ",
+      "indicator": "Relative Strength Index (RSI)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 62,
+      "asset": "QQQ",
+      "indicator": "Standard Deviation Channels",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 63,
+      "asset": "QQQ",
+      "indicator": "Stochastic Oscillator_slowk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 64,
+      "asset": "QQQ",
+      "indicator": "Stochastic Oscillator_slowd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 65,
+      "asset": "QQQ",
+      "indicator": "Stochastic RSI_fastk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 66,
+      "asset": "QQQ",
+      "indicator": "Stochastic RSI_fastd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 67,
+      "asset": "QQQ",
+      "indicator": "The Moving Average Oscillator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 68,
+      "asset": "QQQ",
+      "indicator": "Triple Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 69,
+      "asset": "QQQ",
+      "indicator": "TRIX Indicator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 70,
+      "asset": "QQQ",
+      "indicator": "True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 71,
+      "asset": "QQQ",
+      "indicator": "Typical Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 72,
+      "asset": "QQQ",
+      "indicator": "Ultimate Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 73,
+      "asset": "QQQ",
+      "indicator": "Weighted Close",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 74,
+      "asset": "QQQ",
+      "indicator": "Weighted Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 75,
+      "asset": "QQQ",
+      "indicator": "Williams %R",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 76,
+      "asset": "IWM",
+      "indicator": "ADX",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 77,
+      "asset": "IWM",
+      "indicator": "Aroon Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 78,
+      "asset": "IWM",
+      "indicator": "Average True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 79,
+      "asset": "IWM",
+      "indicator": "Bollinger Bands_upperband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 80,
+      "asset": "IWM",
+      "indicator": "Bollinger Bands_middleband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 81,
+      "asset": "IWM",
+      "indicator": "Bollinger Bands_lowerband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 82,
+      "asset": "IWM",
+      "indicator": "Chande Momentum Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 83,
+      "asset": "IWM",
+      "indicator": "Commodity Channel Index",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 84,
+      "asset": "IWM",
+      "indicator": "Directional Movement",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 85,
+      "asset": "IWM",
+      "indicator": "Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 86,
+      "asset": "IWM",
+      "indicator": "Kaufman Adaptive Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 87,
+      "asset": "IWM",
+      "indicator": "Linear Regression",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 88,
+      "asset": "IWM",
+      "indicator": "Linear Regression Indicator",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 89,
+      "asset": "IWM",
+      "indicator": "MACD Histogram",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 90,
+      "asset": "IWM",
+      "indicator": "MACD Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 91,
+      "asset": "IWM",
+      "indicator": "MACD Percentage",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 92,
+      "asset": "IWM",
+      "indicator": "Median Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 93,
+      "asset": "IWM",
+      "indicator": "Momentum Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 94,
+      "asset": "IWM",
+      "indicator": "Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 95,
+      "asset": "IWM",
+      "indicator": "Parabolic SAR",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 96,
+      "asset": "IWM",
+      "indicator": "Price Differential",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 97,
+      "asset": "IWM",
+      "indicator": "Price Ratio",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 98,
+      "asset": "IWM",
+      "indicator": "Rate of Change (Price)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 99,
+      "asset": "IWM",
+      "indicator": "Relative Strength Index (RSI)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 100,
+      "asset": "IWM",
+      "indicator": "Standard Deviation Channels",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 101,
+      "asset": "IWM",
+      "indicator": "Stochastic Oscillator_slowk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 102,
+      "asset": "IWM",
+      "indicator": "Stochastic Oscillator_slowd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 103,
+      "asset": "IWM",
+      "indicator": "Stochastic RSI_fastk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 104,
+      "asset": "IWM",
+      "indicator": "Stochastic RSI_fastd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 105,
+      "asset": "IWM",
+      "indicator": "The Moving Average Oscillator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 106,
+      "asset": "IWM",
+      "indicator": "Triple Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 107,
+      "asset": "IWM",
+      "indicator": "TRIX Indicator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 108,
+      "asset": "IWM",
+      "indicator": "True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 109,
+      "asset": "IWM",
+      "indicator": "Typical Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 110,
+      "asset": "IWM",
+      "indicator": "Ultimate Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 111,
+      "asset": "IWM",
+      "indicator": "Weighted Close",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 112,
+      "asset": "IWM",
+      "indicator": "Weighted Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 113,
+      "asset": "IWM",
+      "indicator": "Williams %R",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 114,
+      "asset": "TLT",
+      "indicator": "ADX",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 115,
+      "asset": "TLT",
+      "indicator": "Aroon Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 116,
+      "asset": "TLT",
+      "indicator": "Average True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 117,
+      "asset": "TLT",
+      "indicator": "Bollinger Bands_upperband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 118,
+      "asset": "TLT",
+      "indicator": "Bollinger Bands_middleband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 119,
+      "asset": "TLT",
+      "indicator": "Bollinger Bands_lowerband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 120,
+      "asset": "TLT",
+      "indicator": "Chande Momentum Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 121,
+      "asset": "TLT",
+      "indicator": "Commodity Channel Index",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 122,
+      "asset": "TLT",
+      "indicator": "Directional Movement",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 123,
+      "asset": "TLT",
+      "indicator": "Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 124,
+      "asset": "TLT",
+      "indicator": "Kaufman Adaptive Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 125,
+      "asset": "TLT",
+      "indicator": "Linear Regression",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 126,
+      "asset": "TLT",
+      "indicator": "Linear Regression Indicator",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 127,
+      "asset": "TLT",
+      "indicator": "MACD Histogram",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 128,
+      "asset": "TLT",
+      "indicator": "MACD Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 129,
+      "asset": "TLT",
+      "indicator": "MACD Percentage",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 130,
+      "asset": "TLT",
+      "indicator": "Median Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 131,
+      "asset": "TLT",
+      "indicator": "Momentum Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 132,
+      "asset": "TLT",
+      "indicator": "Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 133,
+      "asset": "TLT",
+      "indicator": "Parabolic SAR",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 134,
+      "asset": "TLT",
+      "indicator": "Price Differential",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 135,
+      "asset": "TLT",
+      "indicator": "Price Ratio",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 136,
+      "asset": "TLT",
+      "indicator": "Rate of Change (Price)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 137,
+      "asset": "TLT",
+      "indicator": "Relative Strength Index (RSI)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 138,
+      "asset": "TLT",
+      "indicator": "Standard Deviation Channels",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 139,
+      "asset": "TLT",
+      "indicator": "Stochastic Oscillator_slowk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 140,
+      "asset": "TLT",
+      "indicator": "Stochastic Oscillator_slowd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 141,
+      "asset": "TLT",
+      "indicator": "Stochastic RSI_fastk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 142,
+      "asset": "TLT",
+      "indicator": "Stochastic RSI_fastd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 143,
+      "asset": "TLT",
+      "indicator": "The Moving Average Oscillator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 144,
+      "asset": "TLT",
+      "indicator": "Triple Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 145,
+      "asset": "TLT",
+      "indicator": "TRIX Indicator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 146,
+      "asset": "TLT",
+      "indicator": "True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 147,
+      "asset": "TLT",
+      "indicator": "Typical Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 148,
+      "asset": "TLT",
+      "indicator": "Ultimate Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 149,
+      "asset": "TLT",
+      "indicator": "Weighted Close",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 150,
+      "asset": "TLT",
+      "indicator": "Weighted Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 151,
+      "asset": "TLT",
+      "indicator": "Williams %R",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 152,
+      "asset": "^VIX",
+      "indicator": "ADX",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 153,
+      "asset": "^VIX",
+      "indicator": "Aroon Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 154,
+      "asset": "^VIX",
+      "indicator": "Average True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 155,
+      "asset": "^VIX",
+      "indicator": "Bollinger Bands_upperband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 156,
+      "asset": "^VIX",
+      "indicator": "Bollinger Bands_middleband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 157,
+      "asset": "^VIX",
+      "indicator": "Bollinger Bands_lowerband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 158,
+      "asset": "^VIX",
+      "indicator": "Chande Momentum Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 159,
+      "asset": "^VIX",
+      "indicator": "Commodity Channel Index",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 160,
+      "asset": "^VIX",
+      "indicator": "Directional Movement",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 161,
+      "asset": "^VIX",
+      "indicator": "Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 162,
+      "asset": "^VIX",
+      "indicator": "Kaufman Adaptive Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 163,
+      "asset": "^VIX",
+      "indicator": "Linear Regression",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 164,
+      "asset": "^VIX",
+      "indicator": "Linear Regression Indicator",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 165,
+      "asset": "^VIX",
+      "indicator": "MACD Histogram",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 166,
+      "asset": "^VIX",
+      "indicator": "MACD Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 167,
+      "asset": "^VIX",
+      "indicator": "MACD Percentage",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 168,
+      "asset": "^VIX",
+      "indicator": "Median Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 169,
+      "asset": "^VIX",
+      "indicator": "Momentum Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 170,
+      "asset": "^VIX",
+      "indicator": "Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 171,
+      "asset": "^VIX",
+      "indicator": "Parabolic SAR",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 172,
+      "asset": "^VIX",
+      "indicator": "Price Differential",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 173,
+      "asset": "^VIX",
+      "indicator": "Price Ratio",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 174,
+      "asset": "^VIX",
+      "indicator": "Rate of Change (Price)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 175,
+      "asset": "^VIX",
+      "indicator": "Relative Strength Index (RSI)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 176,
+      "asset": "^VIX",
+      "indicator": "Standard Deviation Channels",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 177,
+      "asset": "^VIX",
+      "indicator": "Stochastic Oscillator_slowk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 178,
+      "asset": "^VIX",
+      "indicator": "Stochastic Oscillator_slowd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 179,
+      "asset": "^VIX",
+      "indicator": "Stochastic RSI_fastk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 180,
+      "asset": "^VIX",
+      "indicator": "Stochastic RSI_fastd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 181,
+      "asset": "^VIX",
+      "indicator": "The Moving Average Oscillator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 182,
+      "asset": "^VIX",
+      "indicator": "Triple Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 183,
+      "asset": "^VIX",
+      "indicator": "TRIX Indicator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 184,
+      "asset": "^VIX",
+      "indicator": "True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 185,
+      "asset": "^VIX",
+      "indicator": "Typical Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 186,
+      "asset": "^VIX",
+      "indicator": "Ultimate Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 187,
+      "asset": "^VIX",
+      "indicator": "Weighted Close",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 188,
+      "asset": "^VIX",
+      "indicator": "Weighted Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 189,
+      "asset": "^VIX",
+      "indicator": "Williams %R",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 190,
+      "asset": "DX-Y.NYB",
+      "indicator": "ADX",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 191,
+      "asset": "DX-Y.NYB",
+      "indicator": "Aroon Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 192,
+      "asset": "DX-Y.NYB",
+      "indicator": "Average True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 193,
+      "asset": "DX-Y.NYB",
+      "indicator": "Bollinger Bands_upperband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 194,
+      "asset": "DX-Y.NYB",
+      "indicator": "Bollinger Bands_middleband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 195,
+      "asset": "DX-Y.NYB",
+      "indicator": "Bollinger Bands_lowerband",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 196,
+      "asset": "DX-Y.NYB",
+      "indicator": "Chande Momentum Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 197,
+      "asset": "DX-Y.NYB",
+      "indicator": "Commodity Channel Index",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 198,
+      "asset": "DX-Y.NYB",
+      "indicator": "Directional Movement",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 199,
+      "asset": "DX-Y.NYB",
+      "indicator": "Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 200,
+      "asset": "DX-Y.NYB",
+      "indicator": "Kaufman Adaptive Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 201,
+      "asset": "DX-Y.NYB",
+      "indicator": "Linear Regression",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 202,
+      "asset": "DX-Y.NYB",
+      "indicator": "Linear Regression Indicator",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 203,
+      "asset": "DX-Y.NYB",
+      "indicator": "MACD Histogram",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 204,
+      "asset": "DX-Y.NYB",
+      "indicator": "MACD Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 205,
+      "asset": "DX-Y.NYB",
+      "indicator": "MACD Percentage",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 206,
+      "asset": "DX-Y.NYB",
+      "indicator": "Median Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 207,
+      "asset": "DX-Y.NYB",
+      "indicator": "Momentum Indicator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 208,
+      "asset": "DX-Y.NYB",
+      "indicator": "Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 209,
+      "asset": "DX-Y.NYB",
+      "indicator": "Parabolic SAR",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 210,
+      "asset": "DX-Y.NYB",
+      "indicator": "Price Differential",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 211,
+      "asset": "DX-Y.NYB",
+      "indicator": "Price Ratio",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 212,
+      "asset": "DX-Y.NYB",
+      "indicator": "Rate of Change (Price)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 213,
+      "asset": "DX-Y.NYB",
+      "indicator": "Relative Strength Index (RSI)",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 214,
+      "asset": "DX-Y.NYB",
+      "indicator": "Standard Deviation Channels",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 215,
+      "asset": "DX-Y.NYB",
+      "indicator": "Stochastic Oscillator_slowk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 216,
+      "asset": "DX-Y.NYB",
+      "indicator": "Stochastic Oscillator_slowd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 217,
+      "asset": "DX-Y.NYB",
+      "indicator": "Stochastic RSI_fastk",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 218,
+      "asset": "DX-Y.NYB",
+      "indicator": "Stochastic RSI_fastd",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 219,
+      "asset": "DX-Y.NYB",
+      "indicator": "The Moving Average Oscillator",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 220,
+      "asset": "DX-Y.NYB",
+      "indicator": "Triple Exponential Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 221,
+      "asset": "DX-Y.NYB",
+      "indicator": "TRIX Indicator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 222,
+      "asset": "DX-Y.NYB",
+      "indicator": "True Range",
+      "family": "width",
+      "formula": "V / C",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 223,
+      "asset": "DX-Y.NYB",
+      "indicator": "Typical Price",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 224,
+      "asset": "DX-Y.NYB",
+      "indicator": "Ultimate Oscillator",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    },
+    {
+      "position": 225,
+      "asset": "DX-Y.NYB",
+      "indicator": "Weighted Close",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 226,
+      "asset": "DX-Y.NYB",
+      "indicator": "Weighted Moving Average",
+      "family": "level",
+      "formula": "L / C - 1",
+      "requires_same_day_adjusted_close": true
+    },
+    {
+      "position": 227,
+      "asset": "DX-Y.NYB",
+      "indicator": "Williams %R",
+      "family": "scale_free",
+      "formula": "unchanged",
+      "requires_same_day_adjusted_close": false
+    }
+  ],
+  "matrix_sha256": "46d23c335f90377c758efc0118f12e9b01877fc4a5ce078a938418710a9a732b",
+  "matrix_copied_byte_for_byte_from_v1": true,
+  "full_sample_standardization": false
+}

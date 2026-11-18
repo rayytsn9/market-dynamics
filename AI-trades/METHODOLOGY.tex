@@ -72,8 +72,13 @@ This experiment reads it and does not write it.
 \textbf{Deliverables.} A reusable transformed and standardized feature matrix, the fitted preprocessing pipeline, transformation metadata, and validation diagnostics.
 
 \textbf{Status.} Complete / Approved on 17~November~2026.
+The authoritative milestone record is \path{AI-trades/artifacts/stage1_approval.json}.
 The approved artifact is \path{AI-trades/artifacts/stage1_price_relative_standardized_v2/}.
+Its validation report is \path{artifacts/stage1_price_relative_standardized_v2/validation_report.md}.
 The four completion gates are satisfied: the artifacts exist, the validation checks recorded below passed, this note records them, and the project owner has approved the stage.
+\path{feature_metadata.json} inside the v2 directory still has \texttt{stage\_complete} set to false.
+That value is the pre-approval state of the export.
+It is not the current milestone status, and the file was left unchanged.
 No column count or retention rule was selected as part of Stage~1.
 
 The export is a package of the price-relative map in Section~\ref{sec:transform} and the frozen scaler
@@ -514,7 +519,9 @@ Test-period return is not a fitting or selection criterion.
 
 The following are the unfinished Stage~2 score-matrix export, together with all of Stages~3--7 in Section~\ref{sec:roadmap}.
 Roadmap Stage~1 is approved.
+The authoritative status is \path{AI-trades/artifacts/stage1_approval.json}.
 Its standardized matrix and portable preprocessor are the v2 artifact in that section.
+The v2 file \path{feature_metadata.json} still records \texttt{stage\_complete} as false, which is its pre-approval export state.
 Nothing in this list is a saved clustering model, a selected dimension, or a completed trading result.
 
 \begin{itemize}

@@ -210,3 +210,15 @@ Transformed retention counts, none selected: cumulative 80% keeps 17 components 
 **Tests.** No statistical test or refit was run. `pdflatex` was run twice on `METHODOLOGY.tex`. The second run wrote `METHODOLOGY.pdf`, 10 pages, and the log contained no overfull or underfull box warnings.
 
 **Git.** None.
+
+## 2026-11-17 — Stage 1 approval record reconciled
+
+**Objective and scope.** Separate the current milestone status from the pre-approval field in `feature_metadata.json`. Do not change the v2 preprocessing files, refit the scaler, or start Stage 2.
+
+**Files created.** `artifacts/stage1_approval.json`. **Files modified.** `DEV_LOG.md`, `METHODOLOGY.tex`, `METHODOLOGY.pdf`.
+
+**Implementation.** `artifacts/stage1_approval.json` is the authoritative Stage 1 milestone record: status `complete`, approval status `approved`, approval date `2026-11-17`, artifact `stage1_price_relative_standardized_v2`, validation report `artifacts/stage1_price_relative_standardized_v2/validation_report.md`. The v2 `feature_metadata.json` field `stage_complete` remains `false`. That value was written before approval and is not the current milestone status. The four v2 files were not rewritten.
+
+**Tests.** `pytest AI-trades/tests` collected 18 tests and reported `18 passed in 24.93s`. SHA-256 of the four v2 files matched the hashes taken before this reconciliation: matrix `46d23c335f90377c758efc0118f12e9b01877fc4a5ce078a938418710a9a732b`, metadata `adb5315474e80df1a4997887d1eff101423b44f445249e5ce0beb4414752a20a`, pipeline `e371ba64cd72fb831dbb4b34d169aeace07dd3af6922c836b788c3446ac62755`, and validation report `79b6689c582213c5ebdeda769b26c01ae1fc09d6cfc22ec67aaedbc9b3348778`. `pdflatex` was run twice on `METHODOLOGY.tex`. The second run wrote `METHODOLOGY.pdf`, 10 pages, and the log contained no overfull or underfull box warnings. No scaler was refit.
+
+**Git.** None.

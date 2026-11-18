@@ -1,0 +1,12 @@
+{
+  "stage": 1,
+  "name": "Data Preparation and Statistical Validation",
+  "status": "complete",
+  "approval_status": "approved",
+  "approval_date": "2026-11-17",
+  "approved_artifact": "stage1_price_relative_standardized_v2",
+  "validation_report": "AI-trades/artifacts/stage1_price_relative_standardized_v2/validation_report.md",
+  "authoritative_for_milestone_status": true,
+  "artifact_metadata_stage_complete": false,
+  "artifact_metadata_note": "The stage_complete field in artifacts/stage1_price_relative_standardized_v2/feature_metadata.json is false because that file records the pre-approval export. It was not rewritten. Current milestone status is this approval record."
+}
